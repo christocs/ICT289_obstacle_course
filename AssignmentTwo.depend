@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1556974040 source:h:\year 2 semester 1\ict 289\assignment 2\assignmenttwo\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<freeglut.h>
+	<cmath>
+	"mainHeader.h"
+
+1556973831 h:\year 2 semester 1\ict 289\assignment 2\assignmenttwo\mainheader.h
+
