@@ -260,10 +260,4 @@ void noKeyboard(unsigned char key, int x, int y)
     {
        ball.direction.z = false;
     }
-
-    if(key == 'q' )
-    {
-        setBallStart();
-    }
-
 }
