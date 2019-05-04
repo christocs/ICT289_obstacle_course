@@ -1,71 +1,76 @@
 #ifndef MAINHEADER_H_INCLUDED
 #define MAINHEADER_H_INCLUDED
 
-   struct Direction
-    {
-        bool x;
-        bool y;
-        bool z;
-    };
+#include "Module.h"
 
-    //Defines a 3d point
-    struct point3D
-    {
-        float x;
-        float y;
-        float z;
-    };
+// The time in milliseconds between timer ticks
+#define TIMERMSECS 33
 
-    //Struct for ball
-    struct
-    {
-        //Previous position of ball's centre (from last tick)
-        point3D prevPos;
-        //Current position of ball's centre
-        point3D currPos;
-        //Previous velocity of the ball (from last tick)
-        point3D prevVel;
+//Moved some structs to Module.h, bad design but temporary measure to compile
 
-        point3D currVel;
-        //Current acceleration of the ball in 3d space in metres per second
-        point3D acc;
+//Struct for ball
+struct {
+    //Previous position of ball's centre (from last tick)
+    point3D prevPos;
 
-        point3D rotation;
+    //Current position of ball's centre
+    point3D currPos;
 
-        float rotationAngle;
+    //Previous velocity of the ball (from last tick)
+    point3D prevVel;
 
-        Direction direction;
+    //Previous velocity of the ball
+    point3D currVel;
 
-        //Radius of ball in metres
-        float radius;
-        //mass of ball in kg
-        float mass;
+    //Current acceleration of the ball in 3d space in metres per second
+    point3D acc;
 
-        float prevTime;
+    //Please label what htis is
+    point3D rotation;
 
-        float currTime;
+    //Please label what this is (is it in degrees, radians, is it the current angle?)
+    //What axis is the rotation on?
+    float rotationAngle;
 
+    //direction of the ball
+    //Is this the current tick's direction or the previous or the next?
+    Vector direction;
 
-    }ball;
+    //Radius of ball in metres
+    float radius;
+    //mass of ball in kg
+    float mass;
 
+    //Time of the last tick
+    float prevTime;
 
+    //Time of the current tick
+    float currTime;
 
-//Acceleration of gravity in metres per second
+    //Acceleration caused by making the ball move in a certain direction, usually from WASD or arrow keys
+    float moveAcc;
+
+    //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
+    float jumpAcc;
+
+    //Pointer to the module the ball is currently in
+    Module *currentModule;
+
+    //Pointer to the module the ball was in last tick
+    Module *prevModule;
+} ball;
+
+//Acceleration of 3d gravity in metres per second
 point3D gravity;
 
 //Acceleration caused by wind resistance in metres per second
 float windResistance;
 
-//Acceleration caused by making the ball move in a certain direction, usually from WASD or arrow keys
-float moveAcc;
-
-//Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
-float jumpAcc;
-
+//Seconds since last tick
 float deltaT_seconds;
 
 void init();
-void setBallStart();
+void resetCourse();
 void display();
 void drawStartFloor();
 void drawBall();
