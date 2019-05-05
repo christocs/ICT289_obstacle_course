@@ -90,10 +90,6 @@ void resetCourse()
 
     ball.currVel = ball.prevVel;
 
-    gravity.x = 0;
-    gravity.y = 9.8;
-    gravity.z = 0;
-
     ball.currTime = glutGet(GLUT_ELAPSED_TIME)/1000;
     ball.prevTime= ball.currTime;
 
