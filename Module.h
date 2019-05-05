@@ -3,21 +3,24 @@
 
 //This is bad design, move structs in headers to separate files
 //Defines a 3d vector
-struct Vector {
+struct Vector
+{
     bool x;
     bool y;
     bool z;
 };
 
 //Defines a 3d point
-struct point3D {
+struct point3D
+{
     float x;
     float y;
     float z;
 };
 
 //2D bounds for something
-struct TwoDBounds {
+struct TwoDBounds
+{
     point3D min_b;
     point3D max_b;
 };
@@ -26,7 +29,8 @@ struct TwoDBounds {
  * Abstract class for what a module should have at minimum
  * @todo separate implementation from header
  */
-class Module { // abstract because of pure virtual methods
+class Module   // abstract because of pure virtual methods
+{
 public:
     /** Sets size of bounds and centre
      */

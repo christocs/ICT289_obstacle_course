@@ -9,7 +9,8 @@
 //Moved some structs to Module.h, bad design but temporary measure to compile
 
 //Struct for ball
-struct {
+struct
+{
     //Previous position of ball's centre (from last tick)
     point3D prevPos;
 

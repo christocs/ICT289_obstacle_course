@@ -36,14 +36,14 @@ public:
 
     /** Method should be triggered everytime the display() function in a freeglut program is called
      */
-     void display();
+    void display();
 
-     const BounceablePlane &getBounceablePlane();
+    const BounceablePlane &getBounceablePlane();
 
-     void setBounceablePlane(const BounceablePlane &newPlane);
+    void setBounceablePlane(const BounceablePlane &newPlane);
 
 private:
-	BounceablePlane plane;
+    BounceablePlane plane;
 };
 
 #endif

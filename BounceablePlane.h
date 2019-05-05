@@ -1,7 +1,8 @@
 #ifndef BOUNCEABLE_PLANE
 #define BOUNCEABLE_PLANE
 
-class BounceablePlane {
+class BounceablePlane
+{
 public:
 
 private:

@@ -6,7 +6,8 @@
 #include <GL/freeglut.h>
 #include <cmath>
 
-int main(int arc, char** argv) {
+int main(int arc, char** argv)
+{
     glutInit(&arc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
     glutInitWindowSize(1024,1024);
@@ -23,7 +24,8 @@ int main(int arc, char** argv) {
     glutMainLoop();
 }
 
-void init() {
+void init()
+{
     glClearColor (1.0, 1.0, 1.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
@@ -52,7 +54,8 @@ void init() {
 
 }
 
-void resetCourse() {
+void resetCourse()
+{
     //Define default gravity
     gravity.x = 0;
     gravity.y = -9.8;
@@ -100,7 +103,8 @@ void resetCourse() {
 }
 
 
-void display() {
+void display()
+{
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -123,7 +127,8 @@ void display() {
 }
 
 
-void drawStartFloor() {
+void drawStartFloor()
+{
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_POLYGON);
     glVertex3f(-1000, -100,  -1000);
@@ -134,7 +139,8 @@ void drawStartFloor() {
 
 }
 
-void drawBall() {
+void drawBall()
+{
     glColor3f(0.0, 0.0, 1.0);
     glPushMatrix ();
 
@@ -149,7 +155,8 @@ void drawBall() {
 }
 
 
-void animate(int value) {
+void animate(int value)
+{
     glutTimerFunc(TIMERMSECS,animate,0);
 
     glutKeyboardFunc(keyboard);
@@ -164,7 +171,8 @@ void animate(int value) {
 
     //ANOTHER NOTE removed gravity for the x and z calculations
 
-    if (ball.direction.x) {
+    if (ball.direction.x)
+    {
         ball.currPos.x = ball.prevPos.x + ball.prevVel.x * deltaT_seconds + 0.5 * pow(deltaT_seconds,2);
         if ( ball.prevVel.x < 500)
             ball.currVel.x  = ball.prevVel.x * deltaT_seconds;
@@ -177,7 +185,8 @@ void animate(int value) {
             ball.currVel.y  = ball.prevVel * deltaT_seconds;
     }*/
 
-    if (ball.direction.z) {
+    if (ball.direction.z)
+    {
         ball.currPos.z = ball.prevPos.z + ball.prevVel.z * deltaT_seconds;
 
     }
@@ -191,8 +200,10 @@ void animate(int value) {
 }
 
 
-void keyboard(unsigned char key, int x, int y) {
-    if(key == 'a' ) {
+void keyboard(unsigned char key, int x, int y)
+{
+    if(key == 'a' )
+    {
         ball.direction.x = true;
         ball.prevVel.x = ball.prevVel.x + 40;
         ball.rotation.y = -1;
@@ -203,14 +214,16 @@ void keyboard(unsigned char key, int x, int y) {
 
     }
 
-    if(key == 'd' ) {
+    if(key == 'd' )
+    {
         ball.direction.x = true;
         ball.prevVel.x = ball.prevVel.x - 40;
         ball.rotation.y = 1;
         ball.rotationAngle = ball.rotationAngle - 10;
     }
 
-    if(key == 'w' ) {
+    if(key == 'w' )
+    {
         ball.direction.z = true;
         ball.prevVel.z = ball.prevVel.z + 40;
         ball.rotation.x = 1;
@@ -220,7 +233,8 @@ void keyboard(unsigned char key, int x, int y) {
             ball.rotationAngle = 0;
     }
 
-    if(key == 's' ) {
+    if(key == 's' )
+    {
         ball.direction.z = true;
         ball.prevVel.z = ball.prevVel.z - 40;
         ball.rotation.x = -1;
@@ -231,27 +245,33 @@ void keyboard(unsigned char key, int x, int y) {
     }
 
 
-    if(key == 'q' ) {
+    if(key == 'q' )
+    {
         resetCourse();
     }
 
 }
 
-void noKeyboard(unsigned char key, int x, int y) {
-    if(key == 'a' ) {
+void noKeyboard(unsigned char key, int x, int y)
+{
+    if(key == 'a' )
+    {
         ball.direction.x = false;
 
     }
 
-    if(key == 'd' ) {
+    if(key == 'd' )
+    {
         ball.direction.x = false;
     }
 
-    if(key == 'w' ) {
+    if(key == 'w' )
+    {
         ball.direction.z = false;
     }
 
-    if(key == 's' ) {
+    if(key == 's' )
+    {
         ball.direction.z = false;
     }
 }
