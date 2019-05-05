@@ -2,11 +2,10 @@
 #define MAINHEADER_H_INCLUDED
 
 #include "Module.h"
+#include "structs.h"
 
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 33
-
-//Moved some structs to Module.h, bad design but temporary measure to compile
 
 //Struct for ball
 struct

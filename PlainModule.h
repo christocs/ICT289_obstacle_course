@@ -1,5 +1,5 @@
-#ifndef PLAIN_MODULE
-#define PLAIN_MODULE
+#ifndef PLAIN_MODULE_H
+#define PLAIN_MODULE_H
 
 #include "Module.h"
 #include "bounceablePlane.h"

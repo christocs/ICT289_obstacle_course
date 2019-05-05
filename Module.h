@@ -1,29 +1,7 @@
 #ifndef Module_H
 #define Module_H
 
-//This is bad design, move structs in headers to separate files
-//Defines a 3d vector
-struct Vector
-{
-    bool x;
-    bool y;
-    bool z;
-};
-
-//Defines a 3d point
-struct point3D
-{
-    float x;
-    float y;
-    float z;
-};
-
-//2D bounds for something
-struct TwoDBounds
-{
-    point3D min_b;
-    point3D max_b;
-};
+#include "structs.h"
 
 /**
  * Abstract class for what a module should have at minimum
