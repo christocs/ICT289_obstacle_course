@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <GL/freeglut.h>
+#include <freeglut.h>
 #include <cmath>
 
 int main(int arc, char** argv)
@@ -32,7 +32,7 @@ void init()
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, 1.0, 0.1, 100000.0);
+    gluPerspective(60.0, 1.0, 0.1, 1000000.0);
 
     /*
     //Initialise modules
@@ -93,9 +93,9 @@ void resetCourse()
     ball.currTime = glutGet(GLUT_ELAPSED_TIME)/1000;
     ball.prevTime= ball.currTime;
 
-    ball.direction.x = false;
-    ball.direction.y = false;
-    ball.direction.z = false;
+    ball.ifDeAcceleration.x = false;
+    ball.ifDeAcceleration.y  = false;
+    ball.ifDeAcceleration.z = false;
 }
 
 
@@ -129,8 +129,8 @@ void drawStartFloor()
     glBegin(GL_POLYGON);
     glVertex3f(-1000, -100,  -1000);
     glVertex3f(1000, -100, -1000);
-    glVertex3f(1000, -100, 1000);
-    glVertex3f(-1000, -100, 1000);
+    glVertex3f(1000, -100, 5000);
+    glVertex3f(-1000, -100, 5000);
     glEnd();
 
 }
@@ -143,7 +143,7 @@ void drawBall()
     glTranslatef (ball.currPos.x,ball.currPos.y,ball.currPos.z);
     glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, 0 );
 
-    glutWireSphere(100,100,10);
+    glutSolidSphere(100,100,10);
     glPopMatrix();
 
     //ball.rotation.x = 0;
@@ -167,12 +167,7 @@ void animate(int value)
 
     //ANOTHER NOTE removed gravity for the x and z calculations
 
-    if (ball.direction.x)
-    {
-        ball.currPos.x = ball.prevPos.x + ball.prevVel.x * deltaT_seconds + 0.5 * pow(deltaT_seconds,2);
-        if ( ball.prevVel.x < 500)
-            ball.currVel.x  = ball.prevVel.x * deltaT_seconds;
-    }
+    ball.currPos.x = ball.prevPos.x + ball.prevVel.x;
 
     /*if (direction.y)
     {
@@ -181,63 +176,119 @@ void animate(int value)
             ball.currVel.y  = ball.prevVel * deltaT_seconds;
     }*/
 
-    if (ball.direction.z)
-    {
-        ball.currPos.z = ball.prevPos.z + ball.prevVel.z * deltaT_seconds;
+    ball.currPos.z = ball.prevPos.z + ball.prevVel.z;
 
-    }
+    deAcceleration();
 
     ball.prevPos = ball.currPos;
     ball.prevTime = ball.currTime;
-    ball.prevVel = ball.currVel;
 
     // Calling post redisplay calls the display again and so we don't need to draw the ball in here else it will be drawn twice
     glutPostRedisplay();
 }
 
 
+void deAcceleration()
+{
+    if (ball.ifDeAcceleration.z)
+    {
+        ball.prevVel.z = ball.prevVel.z / 1.2 ;
+
+        if ((ball.prevVel.z < 0.5 && ball.prevVel.z > 0) || (ball.prevVel.z > -0.5 && ball.prevVel.z < 0))
+            ball.prevVel.z  = 0;
+
+        if (ball.prevVel.z == 0)
+            ball.ifDeAcceleration.z = false;
+    }
+
+    if (ball.ifDeAcceleration.x)
+    {
+        ball.prevVel.x = ball.prevVel.x / 1.2 ;
+
+        if ((ball.prevVel.x < 0.5 && ball.prevVel.x > 0) || (ball.prevVel.x > -0.5 && ball.prevVel.x < 0))
+            ball.prevVel.x  = 0;
+
+        if (ball.prevVel.x == 0)
+             ball.ifDeAcceleration.x = false;
+    }
+
+}
+
 void keyboard(unsigned char key, int x, int y)
 {
     if(key == 'a' )
     {
-        ball.direction.x = true;
-        ball.prevVel.x = ball.prevVel.x + 40;
-        ball.rotation.y = -1;
-        ball.rotationAngle = ball.rotationAngle + 10;
+        if (ball.prevVel.x < 50 && ball.prevVel.x >=0)
+        {
 
-        if (ball.rotationAngle == 180)
-            ball.rotationAngle = 0;
+            if  (ball.prevVel.x == 0)
+            {
+                ball.prevVel.x = 0.1;
+                ball.rotationAngle = 1;
+            }
 
+                ball.prevVel.x = ball.prevVel.x * 1.5 ;
+
+        }
+
+        ball.rotation.y = 2;
+        ball.rotationAngle = ball.rotationAngle * 1.5;
     }
 
     if(key == 'd' )
     {
-        ball.direction.x = true;
-        ball.prevVel.x = ball.prevVel.x - 40;
-        ball.rotation.y = 1;
-        ball.rotationAngle = ball.rotationAngle - 10;
+        if (ball.prevVel.x > -50 && ball.prevVel.x <=0 )
+        {
+
+            if  (ball.prevVel.x == 0)
+            {
+                ball.prevVel.x = -0.5;
+                ball.rotationAngle = -2;
+            }
+
+                ball.prevVel.x = ball.prevVel.x * 1.5;
+        }
+
+        ball.rotation.y = 2;
+        ball.rotationAngle = ball.rotationAngle * 1.5;
     }
 
     if(key == 'w' )
     {
-        ball.direction.z = true;
-        ball.prevVel.z = ball.prevVel.z + 40;
-        ball.rotation.x = 1;
-        ball.rotationAngle = ball.rotationAngle + 10;
+        if (ball.prevVel.z < 50 && ball.prevVel.z >=0)
+        {
 
-        if (ball.rotationAngle == 180)
-            ball.rotationAngle = 0;
+            if  (ball.prevVel.z == 0)
+            {
+                ball.prevVel.z = 0.1;
+                ball.rotationAngle = 1;
+            }
+
+                ball.prevVel.z = ball.prevVel.z * 1.5 ;
+
+        }
+
+        ball.rotation.x = 2;
+        ball.rotationAngle = ball.rotationAngle * 1.5;
     }
+
 
     if(key == 's' )
     {
-        ball.direction.z = true;
-        ball.prevVel.z = ball.prevVel.z - 40;
-        ball.rotation.x = -1;
-        ball.rotationAngle = ball.rotationAngle + 10;
+        if (ball.prevVel.z > -50 && ball.prevVel.z <=0 )
+        {
 
-        if (ball.rotationAngle == 180)
-            ball.rotationAngle = 0;
+            if  (ball.prevVel.z == 0)
+            {
+                ball.prevVel.z = -0.5;
+                ball.rotationAngle = -2;
+            }
+
+                ball.prevVel.z = ball.prevVel.z * 1.5;
+        }
+
+        ball.rotation.x = 2;
+        ball.rotationAngle = ball.rotationAngle * 1.5;
     }
 
 
@@ -250,24 +301,25 @@ void keyboard(unsigned char key, int x, int y)
 
 void noKeyboard(unsigned char key, int x, int y)
 {
-    if(key == 'a' )
-    {
-        ball.direction.x = false;
-
-    }
-
     if(key == 'd' )
     {
-        ball.direction.x = false;
+        ball.ifDeAcceleration.x = true;
+    }
+
+    if(key == 'a' )
+    {
+        ball.ifDeAcceleration.x = true;
     }
 
     if(key == 'w' )
     {
-        ball.direction.z = false;
+        ball.ifDeAcceleration.z = true;
     }
 
-    if(key == 's' )
+     if(key == 's' )
     {
-        ball.direction.z = false;
+       ball.ifDeAcceleration.z = true;
     }
+
 }
+
