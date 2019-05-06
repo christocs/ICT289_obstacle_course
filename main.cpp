@@ -231,7 +231,7 @@ void keyboard(unsigned char key, int x, int y)
     if(key == 'a' )
     {
         //Checks for a maximum speed and checks if the ball has finished deaccel
-        if (ball.prevVel.x > -20 &&  ball.ifDeAcceleration.x == false)
+        if (ball.prevVel.x > -50 &&  ball.ifDeAcceleration.x == false)
         {
             //sets the values to start off with
             if  (ball.prevVel.x == 0)
@@ -255,7 +255,7 @@ void keyboard(unsigned char key, int x, int y)
 
     if(key == 'd' )
     {
-        if (ball.prevVel.x < 20 && ball.ifDeAcceleration.x == false)
+        if (ball.prevVel.x < 50 && ball.ifDeAcceleration.x == false)
         {
             if  (ball.prevVel.x == 0)
             {
@@ -273,7 +273,7 @@ void keyboard(unsigned char key, int x, int y)
 
     if(key == 'w' )
     {
-        if (ball.prevVel.z < 20 && ball.ifDeAcceleration.z == false)
+        if (ball.prevVel.z < 50 && ball.ifDeAcceleration.z == false)
         {
             if  (ball.prevVel.z == 0)
             {
