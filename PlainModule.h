@@ -2,19 +2,14 @@
 #define PLAIN_MODULE_H
 
 #include "Module.h"
+#include "structs.h"
 #include "bounceablePlane.h"
 
-/** Simple module that has a single bouncable plane
+/** Simple module that has a single bouncable plane that fills the whole module's bounds
  */
 class PlainModule : public Module
 {
 public:
-    /** Sets the module's bounds, centre position and bounceable plane
-     */
-    PlainModule(TwoDBounds boundSize, point3D newCentre, BounceablePlane p);
-
-    ~PlainModule();
-
     /** Method should be triggered when the ball enters the module
      *  Can be empty
      */
@@ -37,10 +32,6 @@ public:
     /** Method should be triggered everytime the display() function in a freeglut program is called
      */
     void display();
-
-    const BounceablePlane &getBounceablePlane();
-
-    void setBounceablePlane(const BounceablePlane &newPlane);
 
 private:
     BounceablePlane plane;

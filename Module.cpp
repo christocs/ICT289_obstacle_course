@@ -7,11 +7,6 @@ Module::Module(TwoDBounds newDefaultBounds, point3D newCentre)
     setNewBounds();
 }
 
-Module::~Module()
-{
-
-}
-
 const point3D& Module::getPos() const
 {
     return pos;
@@ -46,10 +41,7 @@ void Module::setDefaultBoundsAndPos(const TwoDBounds &newDefaultBounds, const po
     setNewBounds();
 }
 
-/** Sets bounds of the module according to the centre of the module and the default bounds
- *  @todo: implement
- */
 void Module::setNewBounds()
 {
-
+    ///implement
 }

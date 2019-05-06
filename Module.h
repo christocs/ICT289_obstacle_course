@@ -5,16 +5,13 @@
 
 /**
  * Abstract class for what a module should have at minimum
- * @todo separate implementation from header
  */
 class Module   // abstract because of pure virtual methods
 {
 public:
-    /** Sets size of bounds and centre
+    /** Sets size of bounds
      */
     Module(TwoDBounds newDefaultBounds, point3D newCentre);
-
-    ~Module();
 
     /** Method should be triggered when the ball enters the module
      *  Can be empty
@@ -53,7 +50,6 @@ public:
 
 protected:
     /** Sets bounds of the module according to the centre of the module and the default bounds
-     *  @todo: implement
      */
     void setNewBounds();
 

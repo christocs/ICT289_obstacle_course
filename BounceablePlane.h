@@ -6,6 +6,10 @@
 class BounceablePlane
 {
 public:
+    /**
+     * @param bounds - bounds of the plane
+     */
+    BounceablePlane(TwoDBounds bounds);
 
 private:
 };
