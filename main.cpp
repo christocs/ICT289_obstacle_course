@@ -225,7 +225,7 @@ void deAcceleration()
             ball.prevVel.x  = 0;
 
         if (ball.prevVel.x == 0)
-             ball.ifDeAcceleration.x = false;
+            ball.ifDeAcceleration.x = false;
     }
 
 }
@@ -338,9 +338,9 @@ void noKeyboard(unsigned char key, int x, int y)
         ball.ifDeAcceleration.z = true;
     }
 
-     if(key == 's' )
+    if(key == 's' )
     {
-       ball.ifDeAcceleration.z = true;
+        ball.ifDeAcceleration.z = true;
     }
 
 }
