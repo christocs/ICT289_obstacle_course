@@ -166,6 +166,7 @@ void animate(int value)
     //Note for acceleration need to take account ball velocity + gravity acceleration + wind resistance
 
     //ANOTHER NOTE removed gravity for the x and z calculations
+    deAcceleration();
 
     ball.currPos.x = ball.prevPos.x + ball.prevVel.x;
 
@@ -178,8 +179,6 @@ void animate(int value)
 
     ball.currPos.z = ball.prevPos.z + ball.prevVel.z;
 
-    deAcceleration();
-
     ball.prevPos = ball.currPos;
     ball.prevTime = ball.currTime;
 
@@ -187,6 +186,18 @@ void animate(int value)
     glutPostRedisplay();
 }
 
+void acceleration()
+{
+    if (ball.prevVel.x != 0)
+    {
+        ball.prevVel.x = ball.prevVel.x * ball.acc.x;
+    }
+
+    if (ball.prevVel.z != 0)
+    {
+        ball.prevVel.z = ball.prevVel.z * ball.acc.z;
+    }
+}
 
 void deAcceleration()
 {
@@ -194,7 +205,7 @@ void deAcceleration()
     {
         ball.prevVel.z = ball.prevVel.z / 1.2 ;
 
-        if ((ball.prevVel.z < 0.5 && ball.prevVel.z > 0) || (ball.prevVel.z > -0.5 && ball.prevVel.z < 0))
+        if ((ball.prevVel.z < 1 && ball.prevVel.z > 0) || (ball.prevVel.z > -1 && ball.prevVel.z < 0))
             ball.prevVel.z  = 0;
 
         if (ball.prevVel.z == 0)
@@ -205,7 +216,7 @@ void deAcceleration()
     {
         ball.prevVel.x = ball.prevVel.x / 1.2 ;
 
-        if ((ball.prevVel.x < 0.5 && ball.prevVel.x > 0) || (ball.prevVel.x > -0.5 && ball.prevVel.x < 0))
+        if ((ball.prevVel.x < 1 && ball.prevVel.x > 0) || (ball.prevVel.x > -1 && ball.prevVel.x < 0))
             ball.prevVel.x  = 0;
 
         if (ball.prevVel.x == 0)
@@ -216,56 +227,62 @@ void deAcceleration()
 
 void keyboard(unsigned char key, int x, int y)
 {
+    //Following comments apply for ALL key presses
     if(key == 'a' )
     {
-        if (ball.prevVel.x < 50 && ball.prevVel.x >=0)
+        //Checks for a maximum speed and checks if the ball has finished deaccel
+        if (ball.prevVel.x > -50 &&  ball.ifDeAcceleration.x == false)
         {
-
+            //sets the values to start off with
             if  (ball.prevVel.x == 0)
             {
-                ball.prevVel.x = 0.1;
+                //sets the balls inital velocity
+                ball.prevVel.x = 0.5;
+                
                 ball.rotationAngle = 1;
+                
+                // set the balls acceleration
+                ball.acc.x = 1.2;
             }
-
-                ball.prevVel.x = ball.prevVel.x * 1.5 ;
-
+            //calls the accleration function to accelerate the ball
+            acceleration();
+            
+            //rotates the ball
+            ball.rotation.y = 2;
+            ball.rotationAngle = ball.rotationAngle * 1.5;
         }
-
-        ball.rotation.y = 2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
     }
 
     if(key == 'd' )
     {
-        if (ball.prevVel.x > -50 && ball.prevVel.x <=0 )
+        if (ball.prevVel.x < 50 && ball.ifDeAcceleration.x == false)
         {
-
             if  (ball.prevVel.x == 0)
             {
                 ball.prevVel.x = -0.5;
                 ball.rotationAngle = -2;
+                ball.acc.x = 1.2;
             }
 
-                ball.prevVel.x = ball.prevVel.x * 1.5;
-        }
+            acceleration();
 
-        ball.rotation.y = 2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
+            ball.rotation.y = 2;
+            ball.rotationAngle = ball.rotationAngle * 1.5;
+        }
     }
 
     if(key == 'w' )
     {
-        if (ball.prevVel.z < 50 && ball.prevVel.z >=0)
+        if (ball.prevVel.z < 50 && ball.ifDeAcceleration.z == false)
         {
-
             if  (ball.prevVel.z == 0)
             {
-                ball.prevVel.z = 0.1;
+                ball.prevVel.z = 0.5;
                 ball.rotationAngle = 1;
+                ball.acc.z = 1.2;
             }
 
-                ball.prevVel.z = ball.prevVel.z * 1.5 ;
-
+            acceleration();
         }
 
         ball.rotation.x = 2;
@@ -275,18 +292,18 @@ void keyboard(unsigned char key, int x, int y)
 
     if(key == 's' )
     {
-        if (ball.prevVel.z > -50 && ball.prevVel.z <=0 )
+        if (ball.prevVel.z > -20 && ball.ifDeAcceleration.z == false)
         {
 
             if  (ball.prevVel.z == 0)
             {
                 ball.prevVel.z = -0.5;
                 ball.rotationAngle = -2;
+                ball.acc.z = 1.2;
             }
 
-                ball.prevVel.z = ball.prevVel.z * 1.5;
+            acceleration();
         }
-
         ball.rotation.x = 2;
         ball.rotationAngle = ball.rotationAngle * 1.5;
     }
@@ -322,4 +339,3 @@ void noKeyboard(unsigned char key, int x, int y)
     }
 
 }
-

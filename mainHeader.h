@@ -77,6 +77,7 @@ void drawBall();
 void keyboard(unsigned char key, int x, int y);
 void animate(int value);
 void noKeyboard(unsigned char key, int x, int y);
+void acceleration();
 void deAcceleration ();
 
 #endif // MAINHEADER_H_INCLUDED
