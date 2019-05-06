@@ -25,16 +25,16 @@ struct
     //Current acceleration of the ball in 3d space in metres per second
     point3D acc;
 
-    //Please label what htis is
+    //Determines whether the ball is rotating on the x, y or z axis
     point3D rotation;
 
-    //Please label what this is (is it in degrees, radians, is it the current angle?)
-    //What axis is the rotation on?
+    //Determines how much the ball rotates in a certain direction in degrees (for example if rotationAngle = 10, then the ball rotates
+    // 10 degrees). This does not determine what direction the ball rotates (point3D rotation determines this), ONLY the amount 
+    // amount it rotates by and thus is direction neutral.
     float rotationAngle;
 
-    //direction of the ball
-    //Is this the current tick's direction or the previous or the next?
-    Vector direction;
+    //Checks if the ball is no longer accelerating in the x, y or z direction
+    Vector ifDeAcceleration;
 
     //Radius of ball in metres
     float radius;
@@ -77,6 +77,6 @@ void drawBall();
 void keyboard(unsigned char key, int x, int y);
 void animate(int value);
 void noKeyboard(unsigned char key, int x, int y);
-
+void deAcceleration ();
 
 #endif // MAINHEADER_H_INCLUDED
