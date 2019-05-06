@@ -7,6 +7,8 @@
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 33
 
+#define MAXMOVESPEED 60
+
 //Struct for ball
 struct
 {
@@ -29,15 +31,13 @@ struct
     point3D rotation;
 
     //Determines how much the ball rotates in a certain direction in degrees (for example if rotationAngle = 10, then the ball rotates
-    // 10 degrees). This does not determine what direction the ball rotates (point3D rotation determines this), ONLY the amount 
+    // 10 degrees). This does not determine what direction the ball rotates (point3D rotation determines this), ONLY the amount
     // amount it rotates by and thus is direction neutral.
     float rotationAngle;
 
-    //Checks if the ball is no longer accelerating in the x, y or z direction
-    Vector ifDeAcceleration;
-
     //Radius of ball in metres
     float radius;
+
     //mass of ball in kg
     float mass;
 
@@ -76,8 +76,6 @@ void drawStartFloor();
 void drawBall();
 void keyboard(unsigned char key, int x, int y);
 void animate(int value);
-void noKeyboard(unsigned char key, int x, int y);
-void acceleration();
-void deAcceleration ();
+void addWindResistance();
 
 #endif // MAINHEADER_H_INCLUDED
