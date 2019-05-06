@@ -77,6 +77,11 @@ void resetCourse()
     //Set default jump acceleration
     ball.jumpAcc = 30;
 
+    //Set defaulta acceleration
+    ball.acc.x = 0;
+    ball.acc.y = 0;
+    ball.acc.z = 0;
+
     ball.radius = 100;
     ball.prevPos.x = 0;
     ball.prevPos.y = 100;
@@ -238,15 +243,15 @@ void keyboard(unsigned char key, int x, int y)
             {
                 //sets the balls inital velocity
                 ball.prevVel.x = 0.5;
-                
+
                 ball.rotationAngle = 1;
-                
+
                 // set the balls acceleration
                 ball.acc.x = 1.2;
             }
             //calls the accleration function to accelerate the ball
             acceleration();
-            
+
             //rotates the ball
             ball.rotation.y = 2;
             ball.rotationAngle = ball.rotationAngle * 1.5;
