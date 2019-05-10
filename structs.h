@@ -24,4 +24,12 @@ struct TwoDBounds
     point3D max_b;
 };
 
+struct direction
+{
+    bool posX;
+    bool negX;
+    bool posZ;
+    bool negZ;
+};
+
 #endif

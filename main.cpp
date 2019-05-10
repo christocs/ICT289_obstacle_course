@@ -62,7 +62,7 @@ void resetCourse()
     gravity.z = 0;
 
     //Define default wind resistance
-    windResistance = -0.5;
+    windResistance = 0.8;
 
     //Set initial time before last tick (technically 0)
     deltaT_seconds = TIMERMSECS / 1000.0;
@@ -72,7 +72,10 @@ void resetCourse()
     ball.prevModule = nullptr;
 
     //Set default move acceleration along an x-z plane
-    ball.moveAcc = 0.2;
+    ball.moveAcc = 1;
+
+    //Maximum speed the ball can reach from only pressing move keys
+    ball.maxMoveSpeed = 50;
 
     //Set default jump acceleration
     ball.jumpAcc = 2;
@@ -95,8 +98,13 @@ void resetCourse()
 
     ball.currVel = ball.prevVel;
 
-    ball.currTime = glutGet(GLUT_ELAPSED_TIME)/1000;
+    ball.currTime = glutGet(GLUT_ELAPSED_TIME)/1000.0;
     ball.prevTime= ball.currTime;
+
+    ball.moveDir.posX = false;
+    ball.moveDir.negX = false;
+    ball.moveDir.posZ = false;
+    ball.moveDir.negZ = false;
 }
 
 
@@ -112,7 +120,6 @@ void display()
 
     drawStartFloor();
     drawBall();
-
 
     /*
     //Call display functions for each module
@@ -144,7 +151,7 @@ void drawBall()
     glTranslatef (ball.currPos.x,ball.currPos.y,ball.currPos.z);
     glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, 0 );
 
-    glutSolidSphere(100,100,10);
+    glutSolidSphere(ball.radius, ball.radius, ball.radius / 10.0);
     glPopMatrix();
 
     //ball.rotation.x = 0;
@@ -157,10 +164,35 @@ void animate(int value)
     glutTimerFunc(TIMERMSECS,animate,0);
 
     glutKeyboardFunc(keyboard);
+    glutKeyboardUpFunc(noKeyboard);
 
-    /** Animate ball */
-    ball.currTime = glutGet(GLUT_ELAPSED_TIME)/1000;
+    ball.currTime = glutGet(GLUT_ELAPSED_TIME);
     deltaT_seconds = ball.currTime - ball.prevTime;
+
+    //calc velocity of where the ball wants to go
+    ball.currVel.x = ball.prevVel.x; //add gravity here later
+    //ball.currVel.x += ball.acc.x * deltaT_seconds;
+    ball.currVel.z = ball.prevVel.z; //add gravity here later
+    //ball.currVel.z += ball.acc.z * deltaT_seconds;
+    //Implement the same for y value here and calculate for gravity
+
+    //add acceleration onto velocity when keys pressed
+    if (ball.moveDir.posX == true && ball.currVel.x < ball.maxMoveSpeed)
+    {
+        ball.currVel.x += ball.moveAcc * deltaT_seconds;
+    }
+    if (ball.moveDir.negX == true && ball.currVel.x > -ball.maxMoveSpeed)
+    {
+        ball.currVel.x -= ball.moveAcc * deltaT_seconds;
+    }
+    if (ball.moveDir.posZ == true && ball.currVel.z < ball.maxMoveSpeed)
+    {
+        ball.currVel.z += ball.moveAcc * deltaT_seconds;
+    }
+    if (ball.moveDir.negZ == true && ball.currVel.z > -ball.maxMoveSpeed)
+    {
+        ball.currVel.z -= ball.moveAcc * deltaT_seconds;
+    }
 
     addWindResistance();
 
@@ -173,12 +205,24 @@ void animate(int value)
             ball.currVel.y  = ball.prevVel * deltaT_seconds;
     }*/
 
-    ball.currPos.x = ball.prevPos.x + ball.prevVel.x;
-    ball.currPos.z = ball.prevPos.z + ball.prevVel.z;
+    //determine current module here
 
-    //Attempt at more realistic acceleration calculation, was very computational heavy
-//    ball.currPos.z = ball.prevPos.z + ball.prevVel.z * deltaT_seconds + 0.5 * ((ball.acc.z * windResistance) * deltaT_seconds * deltaT_seconds);
+    if (ball.currentModule != nullptr)
+    {
+        //determines ball physics, position, velocity, etc.
+        //ball.currentModule.onTickInModule();
+    }
+    else
+    {
+        //determine what happens if ball is out of module
+        ball.currPos.x = ball.prevPos.x + ball.currVel.x;
+        ball.currPos.z = ball.prevPos.z + ball.currVel.z;
+        ball.currPos.y = ball.prevPos.y + ball.prevVel.y;
+    }
 
+    std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
+
+    ball.prevVel = ball.currVel;
     ball.prevPos = ball.currPos;
     ball.prevTime = ball.currTime;
 
@@ -188,62 +232,73 @@ void animate(int value)
 
 void keyboard(unsigned char key, int x, int y)
 {
-    //Note: need to catch if delta between velocity and 0 is smaller than MAXMOVESPEED and if this is so, set velocity to 0 so the velocity direction doesn't invert
-    float additionalSpeed = ball.moveAcc * TIMERMSECS;
-    if(key == 'a' && ball.prevVel.x < MAXMOVESPEED)
+    if(key == 'a')
     {
-        ball.prevVel.x += additionalSpeed;
-
-        //rotates the ball, will need to change this to rotate based on speed
-        ball.rotation.y = 2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
+        ball.moveDir.posX = true;
     }
 
-    if(key == 'd' && ball.prevVel.x > -MAXMOVESPEED)
+    if(key == 'd')
     {
-        ball.prevVel.x -= additionalSpeed;
-
-        //rotates the ball, will need to change this to rotate based on speed
-        ball.rotation.y = -2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
+        ball.moveDir.negX = true;
     }
 
-    if(key == 'w' && ball.prevVel.z < MAXMOVESPEED)
+    if(key == 'w')
     {
-        ball.prevVel.z += additionalSpeed;
-
-        //rotates the ball, will need to change this to rotate based on speed
-        ball.rotation.z = 2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
+        ball.moveDir.posZ = true;
     }
 
-    if(key == 's' && ball.prevVel.z > -MAXMOVESPEED)
+    if(key == 's')
     {
-        ball.prevVel.z -= additionalSpeed;
-
-        //rotates the ball, will need to change this to rotate based on speed
-        ball.rotation.z = -2;
-        ball.rotationAngle = ball.rotationAngle * 1.5;
+        ball.moveDir.negZ = true;
     }
 
-    if(key == 'q' )
+    if(key == 'q')
     {
         resetCourse();
+    }
+}
+
+void noKeyboard(unsigned char key, int x, int y)
+{
+    if(key == 'a')
+    {
+        ball.moveDir.posX = false;
+    }
+
+    if(key == 'd')
+    {
+        ball.moveDir.negX = false;
+    }
+
+    if(key == 'w')
+    {
+        ball.moveDir.posZ = false;
+    }
+
+    if(key == 's')
+    {
+        ball.moveDir.negZ = false;
     }
 }
 
 void addWindResistance()
 {
     //need to catch edge cases where velocity + or - wind resistance will make the velocity change directions (when the delta between the velocity and 0 is smaller than the wind resistance)
-    if (ball.prevVel.x > 0) {
-        ball.prevVel.x += windResistance;
-    } else if (ball.prevVel.x < 0) {
-        ball.prevVel.x -+ windResistance;
+    if (ball.currVel.x > 0)
+    {
+        ball.currVel.x *= windResistance;
+    }
+    else if (ball.currVel.x < 0)
+    {
+        ball.currVel.x *= windResistance;
     }
 
-    if (ball.prevVel.z > 0) {
-        ball.prevVel.z += windResistance;
-    } else if (ball.prevVel.z < 0) {
-        ball.prevVel.z -+ windResistance;
+    if (ball.currVel.z > 0)
+    {
+        ball.currVel.z *= windResistance;
+    }
+    else if (ball.currVel.z < 0)
+    {
+        ball.currVel.z *= windResistance;
     }
 }

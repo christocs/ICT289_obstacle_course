@@ -5,9 +5,7 @@
 #include "structs.h"
 
 // The time in milliseconds between timer ticks
-#define TIMERMSECS 33
-
-#define MAXMOVESPEED 60
+#define TIMERMSECS 11
 
 //Struct for ball
 struct
@@ -50,6 +48,8 @@ struct
     //Acceleration caused by making the ball move in a certain direction, usually from WASD or arrow keys
     float moveAcc;
 
+    float maxMoveSpeed;
+
     //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
     float jumpAcc;
 
@@ -58,6 +58,8 @@ struct
 
     //Pointer to the module the ball was in last tick
     Module *prevModule;
+
+    direction moveDir;
 } ball;
 
 //Acceleration of 3d gravity in metres per second
@@ -75,6 +77,7 @@ void display();
 void drawStartFloor();
 void drawBall();
 void keyboard(unsigned char key, int x, int y);
+void noKeyboard(unsigned char key, int x, int y);
 void animate(int value);
 void addWindResistance();
 
