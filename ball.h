@@ -1,0 +1,63 @@
+#ifndef BALL_H
+#define BALL_H
+
+#include "direction.h"
+#include "point3D.h"
+#include "direction.h"
+
+//Struct for ball
+struct ball
+{
+    //Previous position of ball's centre (from last tick)
+    point3D prevPos;
+
+    //Current position of ball's centre
+    point3D currPos;
+
+    //Previous velocity of the ball (from last tick)
+    point3D prevVel;
+
+    //Previous velocity of the ball
+    point3D currVel;
+
+    //Current acceleration of the ball in 3d space in metres per second
+    point3D acc;
+
+    //Determines whether the ball is rotating on the x, y or z axis
+    point3D rotation;
+
+    //Determines how much the ball rotates in a certain direction in degrees (for example if rotationAngle = 10, then the ball rotates
+    // 10 degrees). This does not determine what direction the ball rotates (point3D rotation determines this), ONLY the amount
+    // amount it rotates by and thus is direction neutral.
+    float rotationAngle;
+
+    //Radius of ball in metres
+    float radius;
+
+    //mass of ball in kg
+    float mass;
+
+    //Time of the last tick
+    float prevTime;
+
+    //Time of the current tick
+    float currTime;
+
+    //Acceleration caused by making the ball move in a certain direction, usually from WASD or arrow keys
+    float moveAcc;
+
+    float maxMoveSpeed;
+
+    //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
+    float jumpAcc;
+
+    //Pointer to the module the ball is currently in
+    Module *currentModule;
+
+    //Pointer to the module the ball was in last tick
+    Module *prevModule;
+
+    direction moveDir;
+};
+
+#endif // BALL_H

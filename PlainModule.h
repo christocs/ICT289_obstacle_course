@@ -2,7 +2,6 @@
 #define PLAIN_MODULE_H
 
 #include "Module.h"
-#include "structs.h"
 #include "bounceablePlane.h"
 
 /** Simple module that has a single bouncable plane that fills the whole module's bounds

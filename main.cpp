@@ -103,6 +103,8 @@ void resetCourse()
 
     ball.moveDir.posX = false;
     ball.moveDir.negX = false;
+    ball.moveDir.posY = false;
+    ball.moveDir.negY = false;
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
 }
