@@ -7,6 +7,8 @@
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 11
 
+#define PROGRAM_NAME "Obstacle Course"
+
 //Contains information about the ball
 ball ball;
 

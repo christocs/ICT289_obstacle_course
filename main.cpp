@@ -12,7 +12,7 @@ int main(int arc, char** argv)
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
     glutInitWindowSize(1024,1024);
     glutInitWindowPosition(0,0);
-    glutCreateWindow("Obstacle course");
+    glutCreateWindow(PROGRAM_NAME);
 
     init();
 
