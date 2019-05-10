@@ -19,6 +19,9 @@ float windResistance;
 //Seconds since last tick
 float deltaT_seconds;
 
+//Contains all modules in the course
+//Module modules[];
+
 void init();
 void resetCourse();
 void display();

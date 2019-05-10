@@ -46,10 +46,10 @@ struct ball
     //Acceleration caused by making the ball move in a certain direction, usually from WASD or arrow keys
     float moveAcc;
 
-    float maxMoveSpeed;
-
     //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
     float jumpAcc;
+
+    float maxMoveSpeed;
 
     //Pointer to the module the ball is currently in
     Module *currentModule;

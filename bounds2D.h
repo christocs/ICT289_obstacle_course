@@ -6,8 +6,8 @@
 //2D bounds for something
 struct bounds2D
 {
-    point3D min_b;
-    point3D max_b;
+    point3D a;
+    point3D b;
 };
 
 #endif // BOUNDS2D_H

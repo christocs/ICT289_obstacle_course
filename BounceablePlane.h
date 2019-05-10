@@ -7,19 +7,29 @@ class BounceablePlane
 {
 public:
     /**
-     * @param bounds - bounds of the plane
+     * @param b - bounds of the plane
      */
-    BounceablePlane(bounds2D bounds);
+    BounceablePlane(bounds2D b);
 
     /**
-     * @param bounds - bounds of the plane
+     * @param b - bounds of the plane
      * @param amount - absorbtion factor when the ball bounces off the plane
      */
-    BounceablePlane(bounds2D bounds, float amount);
+    BounceablePlane(bounds2D b, float amount);
 
     float getAbsorbAmount();
 
     void setAbsorbAmount(float amount);
+
+    bounds2D getBounds();
+
+    void setBounds(bounds2D b);
+
+    /**
+     * returns true if collision detected
+     * calculates new velocity of ball if collision happens
+     */
+    bool calcCollision();
 
 private:
         ///absorbtion factor when the ball bounces off the plane
