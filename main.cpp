@@ -153,7 +153,7 @@ void drawBall()
     glTranslatef (ball.currPos.x,ball.currPos.y,ball.currPos.z);
     glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, 0 );
 
-    glutSolidSphere(ball.radius, ball.radius, ball.radius / 10.0);
+    glutSolidSphere(ball.radius, ball.radius / 8, ball.radius / 8);
     glPopMatrix();
 
     //ball.rotation.x = 0;
