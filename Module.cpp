@@ -1,10 +1,9 @@
 #include "Module.h"
 
-Module::Module(bounds2D newDefaultBounds, point3D newCentre)
+Module::Module(const bounds2D& newDefaultBounds, const point3D& newCentre)
 {
-    default_bounds = newDefaultBounds;
     pos = newCentre;
-    setNewBounds();
+    setDefaultBounds(newDefaultBounds);
 }
 
 const point3D& Module::getPos() const
@@ -24,7 +23,8 @@ const bounds2D& Module::getDefaultBounds() const
 
 void Module::setDefaultBounds(const bounds2D &newDefaultBounds)
 {
-    default_bounds = newDefaultBounds;
+    default_bounds[0] = newDefaultBounds[0];
+    default_bounds[1] = newDefaultBounds[1];
     setNewBounds();
 }
 
@@ -36,9 +36,8 @@ void Module::setPos(const point3D &newPos)
 
 void Module::setDefaultBoundsAndPos(const bounds2D &newDefaultBounds, const point3D &newPos)
 {
-    default_bounds = newDefaultBounds;
     pos = newPos;
-    setNewBounds();
+    setDefaultBounds(newDefaultBounds);
 }
 
 void Module::setNewBounds()
