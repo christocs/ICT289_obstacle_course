@@ -217,9 +217,9 @@ void animate(int value)
     else
     {
         //determine what happens if ball is out of module
-        ball.currPos.x = ball.prevPos.x + ball.currVel.x;
-        ball.currPos.z = ball.prevPos.z + ball.currVel.z;
-        ball.currPos.y = ball.prevPos.y + ball.prevVel.y;
+        ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds;
+        ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
+        ball.currPos.y = ball.prevPos.y + ball.prevVel.y * deltaT_seconds;
     }
 
     std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
