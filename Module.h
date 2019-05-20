@@ -1,7 +1,8 @@
 #ifndef Module_H
 #define Module_H
 
-#include "structs.h"
+#include "bounds2D.h"
+#include "point3D.h"
 
 /**
  * Abstract class for what a module should have at minimum
@@ -11,7 +12,7 @@ class Module   // abstract because of pure virtual methods
 public:
     /** Sets size of bounds
      */
-    Module(TwoDBounds newDefaultBounds, point3D newCentre);
+    Module(bounds2D newDefaultBounds, point3D newCentre);
 
     /** Method should be triggered when the ball enters the module
      *  Can be empty
@@ -38,15 +39,15 @@ public:
 
     const point3D& getPos() const;
 
-    const TwoDBounds& getBounds() const;
+    const bounds2D& getBounds() const;
 
-    const TwoDBounds& getDefaultBounds() const;
+    const bounds2D& getDefaultBounds() const;
 
-    void setDefaultBounds(const TwoDBounds &newDefaultBounds);
+    void setDefaultBounds(const bounds2D &newDefaultBounds);
 
     void setPos(const point3D &newPos);
 
-    void setDefaultBoundsAndPos(const TwoDBounds &newDefaultBounds, const point3D &newPos);
+    void setDefaultBoundsAndPos(const bounds2D &newDefaultBounds, const point3D &newPos);
 
 protected:
     /** Sets bounds of the module according to the centre of the module and the default bounds
@@ -56,12 +57,12 @@ protected:
     /** Defining bounds for the module, assuming the centre is the origin
      *  note that it doesn't take into account height, so modules can't be stacked
      */
-    TwoDBounds default_bounds;
+    bounds2D default_bounds;
 
     /** The bounds for the module based on the pos
      *  note that it doesn't take into account height, so modules can't be stacked
      */
-    TwoDBounds bounds;
+    bounds2D bounds;
 
     /** The position of the module's centre
      */

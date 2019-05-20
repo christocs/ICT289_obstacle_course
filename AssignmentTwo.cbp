@@ -32,8 +32,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="BounceablePlane.cpp" />
+		<Unit filename="BounceablePlane.h" />
+		<Unit filename="Module.cpp" />
+		<Unit filename="Module.h" />
+		<Unit filename="PlainModule.h" />
+		<Unit filename="ball.h" />
+		<Unit filename="bounds2D.h" />
+		<Unit filename="direction.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mainHeader.h" />
+		<Unit filename="plainModule.cpp" />
+		<Unit filename="point3D.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

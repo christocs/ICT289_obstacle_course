@@ -1,3 +1,6 @@
 obj/
 bin/
 AssignmentTwo.depend
+*.dia~
+*.layout
+documentation/UML/UML.dia.autosave
