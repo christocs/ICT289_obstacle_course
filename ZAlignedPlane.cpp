@@ -13,12 +13,16 @@ void ZAlignedPlane::display()
     glEnd();
 }
 
-const point3D& ZAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float secondsDelta)
+point3D ZAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta)
 {
-    point3D newVel;
-    newVel.x = vel.x;
-    newVel.y = vel.y;
-    newVel.z = -(bounceCoefficient * vel.z);
+    point3D newVel = vel;
+
+    //Checks if the ball's tip hits the main part of the plane
+    if (prevPos.z >= mainAxis - radius && prevPos.z <= mainAxis + radius)
+    {
+        newVel.z = -(bounceCoefficient * vel.z);
+    } //else if (do edge detection here)
+    //Checks if the ball hits the edge of the plane
 
     return newVel;
 }

@@ -41,6 +41,10 @@
 		<Unit filename="PlainModule.h" />
 		<Unit filename="XAlignedPlane.cpp" />
 		<Unit filename="XAlignedPlane.h" />
+		<Unit filename="YAlignedPlane.cpp" />
+		<Unit filename="YAlignedPlane.h" />
+		<Unit filename="ZAlignedPlane.cpp" />
+		<Unit filename="ZAlignedPlane.h" />
 		<Unit filename="ball.h" />
 		<Unit filename="bounds2D.h" />
 		<Unit filename="colour.h" />
@@ -50,7 +54,6 @@
 		<Unit filename="plainModule.cpp" />
 		<Unit filename="point3D.h" />
 		<Unit filename="rectangleCorners.h" />
-		<Unit filename="structs.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

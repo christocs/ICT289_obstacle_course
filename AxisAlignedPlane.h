@@ -44,7 +44,7 @@ public:
     /**
      * calculates what the velocity of the ball should be, based on the ball's current velocity and position
      */
-    virtual const point3D& getBallVel(const point3D& vel, const point3D& prevPos, float secondsDelta) = 0;
+    virtual point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta) = 0;
 
     virtual void display() = 0;
 

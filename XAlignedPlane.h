@@ -8,7 +8,7 @@ class XAlignedPlane: public AxisAlignedPlane
 public:
     void display();
 
-    const point3D& getBallVel(const point3D& vel, const point3D& prevPos, float secondsDelta);
+    point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta);
 };
 
 #endif
