@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1559480645 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\axisalignedplane.cpp
+	"AxisAlignedPlane.h"
+	<assert.h>
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\axisalignedplane.h
+	"point3D.h"
+	"colour.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\point3d.h
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\colour.h
+
+1559480645 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\module.cpp
+	"Module.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\module.h
+	"bounds2D.h"
+	"point3D.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\bounds2d.h
+	"point3D.h"
+
+1559480645 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\plainmodule.cpp
+	"PlainModule.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\plainmodule.h
+	"Module.h"
+	"YAlignedPlane.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\yalignedplane.h
+	"AxisAlignedPlane.h"
+
+1559485476 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\main.cpp
+	"mainHeader.h"
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+
+1559481414 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\mainheader.h
+	<freeglut.h>
+	"Module.h"
+	"ball.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\ball.h
+	"direction.h"
+	"point3D.h"
+	"direction.h"
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\direction.h
+
+1559487368 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\xalignedplane.cpp
+	"XAlignedPlane.h"
+	<freeglut.h>
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\xalignedplane.h
+	"AxisAlignedPlane.h"
+
+1559481414 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\yalignedplane.cpp
+	"YAlignedPlane.h"
+	<freeglut.h>
+
+1559481414 source:h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\zalignedplane.cpp
+	"ZAlignedPlane.h"
+	<freeglut.h>
+
+1559480645 h:\year 2 semester 1\ict 289\assignment 2\current assignment\ict289_obstacle_course\zalignedplane.h
+	"AxisAlignedPlane.h"
+
