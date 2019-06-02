@@ -4,10 +4,6 @@
 #include "point3D.h"
 
 //2D bounds for something
-struct bounds2D
-{
-    point3D a;
-    point3D b;
-};
+typedef point3D bounds2D[2];
 
 #endif // BOUNDS2D_H

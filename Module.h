@@ -12,7 +12,7 @@ class Module   // abstract because of pure virtual methods
 public:
     /** Sets size of bounds
      */
-    Module(bounds2D newDefaultBounds, point3D newCentre);
+    Module(const bounds2D& newDefaultBounds, const point3D& newCentre);
 
     /** Method should be triggered when the ball enters the module
      *  Can be empty
