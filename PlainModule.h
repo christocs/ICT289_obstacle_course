@@ -2,7 +2,7 @@
 #define PLAIN_MODULE_H
 
 #include "Module.h"
-#include "bounceablePlane.h"
+#include "YAlignedPlane.h"
 
 /** Simple module that has a single bouncable plane that fills the whole module's bounds
  */
@@ -33,7 +33,7 @@ public:
     void display();
 
 private:
-    BounceablePlane plane;
+    YAlignedPlane plane;
 };
 
 #endif
