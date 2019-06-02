@@ -3,7 +3,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <GL/freeglut.h>
 #include <cmath>
 
 int main(int arc, char** argv)

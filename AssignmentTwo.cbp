@@ -32,11 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="AxisAlignedPlane.cpp" />
+		<Unit filename="AxisAlignedPlane.h" />
 		<Unit filename="BounceablePlane.cpp" />
 		<Unit filename="BounceablePlane.h" />
 		<Unit filename="Module.cpp" />
 		<Unit filename="Module.h" />
 		<Unit filename="PlainModule.h" />
+		<Unit filename="XAlignedPlane.cpp" />
+		<Unit filename="XAlignedPlane.h" />
 		<Unit filename="ball.h" />
 		<Unit filename="bounds2D.h" />
 		<Unit filename="colour.h" />
