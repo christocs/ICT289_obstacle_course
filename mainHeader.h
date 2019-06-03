@@ -4,6 +4,7 @@
 #include <freeglut.h>
 #include "Module.h"
 #include "ball.h"
+#include "moduleOneTest.h"
 
 // The time in milliseconds between timer ticks
 #define TIMERMSECS 11
@@ -40,4 +41,6 @@ void drawEndFloor();
 
 bool jumpPress;
 moduleOneTest levelOne;
+int currentModule;
+
 #endif // MAINHEADER_H_INCLUDED

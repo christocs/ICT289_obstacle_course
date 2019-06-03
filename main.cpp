@@ -1,5 +1,4 @@
 #include "mainHeader.h"
-#include <moduleOneTest.h>
 
 #include <iostream>
 #include <stdio.h>
@@ -18,7 +17,7 @@ int main(int arc, char** argv)
 
     init();
 
-    startPlatform();
+
 
     glutDisplayFunc(display);
 
@@ -30,14 +29,14 @@ int main(int arc, char** argv)
 
 void init()
 {
-    glClearColor (1.0, 1.0, 1.0, 1.0);
+    glClearColor (0.196078, 0.6, 0.8, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0, 1.0, 0.1, 1000000.0);
-
+    glEnable (GL_DEPTH_TEST);
     /*
     //Initialise modules
     3dPoint plainModulePos
@@ -65,12 +64,9 @@ void startPlatform()
 
     if (currentModule == 0)
     {
-        // Display module one
+        levelOne.startModuleOne();
         drawEndFloor();
     }
-
-    else if (currentModule == 1)
-        // Display module two
 
 
 }
@@ -83,7 +79,7 @@ void resetCourse()
     gravity.z = 0;
 
     //Define default wind resistance
-    windResistance = 0.2;
+    windResistance = 0.35;
 
     //Set initial time before last tick (technically 0)
     deltaT_seconds = TIMERMSECS / 1000.0;
@@ -93,7 +89,7 @@ void resetCourse()
     ball.prevModule = nullptr;
 
     //Set default move acceleration along an x-z plane
-    ball.moveAcc = 1;
+    ball.moveAcc = 0.2;
 
     //Maximum speed the ball can reach from only pressing move keys
     ball.maxMoveSpeed = 10;
@@ -134,6 +130,7 @@ void resetCourse()
 
 void display()
 {
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -142,12 +139,13 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+    startPlatform();
     drawStartFloor();
     drawBall();
 
     /*
     //Call display functions for each module
-    for (i = 0; i < moduleContainer.length; i++) {
+    for (i = 0; i < moduleContainer.length; i++) {plane[0].x,plane[0].y,  plane[0].z
     	moduleContainer[i].display()
     }*/
 
@@ -157,7 +155,7 @@ void display()
 
 void drawStartFloor()
 {
-    glColor3f(1.0, 0.0, 0.0);
+    glColor3f(.48235, 0.98823, 0.0);
 
     glBegin(GL_POLYGON);
         glVertex3f(-500, -100,  -100);
@@ -172,7 +170,8 @@ void drawStartFloor()
 
 void drawEndFloor()
 {
-    point3D modulePlane[4] = levelOne.getPlaneSize();
+    /*point3D modulePlane[4] ;
+    modulePlane = levelOne.getPlaneSize();
 
     glColor3f(1.0, 0.0, 0.0);
 
@@ -186,18 +185,18 @@ void drawEndFloor()
 
     glColor3f(1.0, 1.0, 0.0);
 
-    /*glBegin(GL_POLYGON);
+    glBegin(GL_POLYGON);
         glVertex3f(-250, -100,  500);
         glVertex3f(250, -100, 500);
         glVertex3f(250, -100, 750);
         glVertex3f(-250, -100, 750);
-    glEnd();*/
+    glEnd();
 
     if (ball.currPos.x > modulePlane[3].x/1.5 && ball.currPos.x < modulePlane[4].x/1.5 && ball.currPos.z > modulePlane[3].z&& ball.currPos.z < modulePlane[3].z + 250)
     {
         resetCourse();
         currentModule++;
-    }
+    } */
 
 
 }
@@ -208,13 +207,12 @@ void drawBall()
     glPushMatrix ();
 
     glTranslatef (ball.currPos.x,ball.currPos.y,ball.currPos.z);
-    glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, 0 );
+    glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, ball.rotation.z );
 
     glutSolidSphere(ball.radius, ball.radius / 8, ball.radius / 8);
     glPopMatrix();
 
-    //ball.rotation.x = 0;
-    // ball.rotation.y = 0;
+
 }
 
 
@@ -281,12 +279,30 @@ void animate(int value)
     {
         //determine what happens if ball is out of module
         ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds;
+        if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
+        {
+            ball.rotation.y = 1;
+            ball.rotationAngle =  ball.rotationAngle + 6;
+        }
+
+        else
+            ball.rotation.z = 0;
+
         ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
+
+        if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
+        {
+            ball.rotation.x = 1;
+            ball.rotationAngle =  ball.rotationAngle + 6;
+        }
+
+        else
+            ball.rotation.x = 0;
 
         if (ball.currPos.y - ball.radius > 0)
         {
             ball.currPos.y = ball.prevPos.y + ball.currVel.y * deltaT_seconds + 0.5 * gravity.y * pow(deltaT_seconds,2.0);
-            ball.currVel.y = ball.currVel.y * gravity.y/10;
+            ball.currVel.y = ball.currVel.y * gravity.y;
         }
 
         else
