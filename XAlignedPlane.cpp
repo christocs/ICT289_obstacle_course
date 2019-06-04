@@ -1,5 +1,5 @@
 #include "XAlignedPlane.h"
-#include <GL/freeglut.h>
+#include <freeglut.h>
 
 void XAlignedPlane::display()
 {

@@ -1,5 +1,5 @@
 #include "YAlignedPlane.h"
-#include <GL/freeglut.h>
+#include <freeglut.h>
 
 void YAlignedPlane::display()
 {
