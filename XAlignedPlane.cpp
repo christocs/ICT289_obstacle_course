@@ -1,15 +1,15 @@
 #include "XAlignedPlane.h"
-#include <freeglut.h>
+#include <GL/freeglut.h>
 
 void XAlignedPlane::display()
 {
     glColor3f(colour.r, colour.g, colour.b);
 
     glBegin(GL_POLYGON);
-    glVertex3f(mainAxis, axis2Min, axis3Min);
-    glVertex3f(mainAxis, axis2Max, axis3Min);
-    glVertex3f(mainAxis, axis2Max, axis3Max);
-    glVertex3f(mainAxis, axis2Min, axis3Max);
+    glVertex3d(mainAxis, axis2Min, axis3Min);
+    glVertex3d(mainAxis, axis2Max, axis3Min);
+    glVertex3d(mainAxis, axis2Max, axis3Max);
+    glVertex3d(mainAxis, axis2Min, axis3Max);
     glEnd();
 }
 

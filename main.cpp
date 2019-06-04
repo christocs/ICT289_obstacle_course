@@ -1,12 +1,9 @@
 #include "mainHeader.h"
-#include <moduleOneTest.h>
 
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
-
-
 
 int main(int arc, char** argv)
 {
@@ -17,8 +14,6 @@ int main(int arc, char** argv)
     glutCreateWindow(PROGRAM_NAME);
 
     init();
-
-    startPlatform();
 
     glutDisplayFunc(display);
 
@@ -58,32 +53,15 @@ void init()
 
 }
 
-
-void startPlatform()
-{
-    drawStartFloor();
-
-    if (currentModule == 0)
-    {
-        // Display module one
-        drawEndFloor();
-    }
-
-    else if (currentModule == 1)
-        // Display module two
-
-
-}
-
 void resetCourse()
 {
     //Define default gravity
     gravity.x = 0;
-    gravity.y = -0.2;
+    gravity.y = -9.8;
     gravity.z = 0;
 
     //Define default wind resistance
-    windResistance = 0.2;
+    windResistance = 0.8;
 
     //Set initial time before last tick (technically 0)
     deltaT_seconds = TIMERMSECS / 1000.0;
@@ -96,10 +74,10 @@ void resetCourse()
     ball.moveAcc = 1;
 
     //Maximum speed the ball can reach from only pressing move keys
-    ball.maxMoveSpeed = 10;
+    ball.maxMoveSpeed = 50;
 
     //Set default jump acceleration
-    ball.jumpAcc = 0.6;
+    ball.jumpAcc = 2;
 
     //Set defaulta acceleration
     ball.acc.x = 0;
@@ -128,7 +106,6 @@ void resetCourse()
     ball.moveDir.negY = false;
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
-    glutIgnoreKeyRepeat(1);
 }
 
 
@@ -158,47 +135,12 @@ void display()
 void drawStartFloor()
 {
     glColor3f(1.0, 0.0, 0.0);
-
     glBegin(GL_POLYGON);
-        glVertex3f(-500, -100,  -100);
-        glVertex3f(500, -100, -100);
-        glVertex3f(500, -100, 1000);
-        glVertex3f(-500, -100, 1000);
+    glVertex3f(-1000, -100,  -1000);
+    glVertex3f(1000, -100, -1000);
+    glVertex3f(1000, -100, 5000);
+    glVertex3f(-1000, -100, 5000);
     glEnd();
-
-    glColor3f(1.0, 1.0, 0.0);
-
-}
-
-void drawEndFloor()
-{
-    point3D modulePlane[4] = levelOne.getPlaneSize();
-
-    glColor3f(1.0, 0.0, 0.0);
-
-
-    glBegin(GL_POLYGON);
-        glVertex3f(modulePlane[3].x/1.5, -100,  modulePlane[3].z);
-        glVertex3f(modulePlane[4].x/1.5, -100, modulePlane[3].z);
-        glVertex3f(modulePlane[4].x/1.5, -100, modulePlane[3].z + 250);
-        glVertex3f(modulePlane[3].x/1.5, -100, modulePlane[3].z + 250);
-    glEnd();
-
-    glColor3f(1.0, 1.0, 0.0);
-
-    /*glBegin(GL_POLYGON);
-        glVertex3f(-250, -100,  500);
-        glVertex3f(250, -100, 500);
-        glVertex3f(250, -100, 750);
-        glVertex3f(-250, -100, 750);
-    glEnd();*/
-
-    if (ball.currPos.x > modulePlane[3].x/1.5 && ball.currPos.x < modulePlane[4].x/1.5 && ball.currPos.z > modulePlane[3].z&& ball.currPos.z < modulePlane[3].z + 250)
-    {
-        resetCourse();
-        currentModule++;
-    }
-
 
 }
 
@@ -253,12 +195,6 @@ void animate(int value)
         ball.currVel.z -= ball.moveAcc * deltaT_seconds;
     }
 
-    if (ball.moveDir.posY == true && ball.currVel.y < ball.maxMoveSpeed)
-    {
-        ball.currVel.y += ball.jumpAcc * deltaT_seconds;
-
-    }
-
     addWindResistance();
 
     //Note for acceleration need to take account ball velocity + gravity acceleration + wind resistance
@@ -282,18 +218,7 @@ void animate(int value)
         //determine what happens if ball is out of module
         ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds;
         ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
-
-        if (ball.currPos.y - ball.radius > 0)
-        {
-            ball.currPos.y = ball.prevPos.y + ball.currVel.y * deltaT_seconds + 0.5 * gravity.y * pow(deltaT_seconds,2.0);
-            ball.currVel.y = ball.currVel.y * gravity.y/10;
-        }
-
-        else
-        {
-             ball.currPos.y = ball.prevPos.y + ball.prevVel.y * deltaT_seconds;
-        }
-
+        ball.currPos.y = ball.prevPos.y + ball.prevVel.y * deltaT_seconds;
     }
 
     std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
@@ -332,16 +257,6 @@ void keyboard(unsigned char key, int x, int y)
     {
         resetCourse();
     }
-
-    if (key == 32)
-    {
-        if (ball.currPos.y - ball.radius <= 0.1 && jumpPress == false)
-        {
-              ball.moveDir.posY = true;
-
-              jumpPress = false;
-        }
-    }
 }
 
 void noKeyboard(unsigned char key, int x, int y)
@@ -365,12 +280,6 @@ void noKeyboard(unsigned char key, int x, int y)
     {
         ball.moveDir.negZ = false;
     }
-
-    if (key == 32)
-    {
-        ball.moveDir.posY = false;
-    }
-
 }
 
 void addWindResistance()

@@ -1,7 +1,7 @@
 #ifndef MAINHEADER_H
 #define MAINHEADER_H
 
-#include <freeglut.h>
+#include <GL/freeglut.h>
 #include "Module.h"
 #include "ball.h"
 
@@ -34,10 +34,5 @@ void keyboard(unsigned char key, int x, int y);
 void noKeyboard(unsigned char key, int x, int y);
 void animate(int value);
 void addWindResistance();
-void startPlatform();
-void drawEndFloor();
 
-
-bool jumpPress;
-moduleOneTest levelOne;
 #endif // MAINHEADER_H_INCLUDED
