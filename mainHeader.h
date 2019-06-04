@@ -1,13 +1,13 @@
 #ifndef MAINHEADER_H
 #define MAINHEADER_H
 
-#include <GL/freeglut.h>
+#include <freeglut.h>
 #include "Module.h"
 #include "ball.h"
 #include "moduleOneTest.h"
 
 // The time in milliseconds between timer ticks
-#define TIMERMSECS 11
+#define TIMERMSECS 9
 
 #define PROGRAM_NAME "Obstacle Course"
 
@@ -39,8 +39,15 @@ void startPlatform();
 void drawEndFloor();
 
 
+//Has jump been pressed
 bool jumpPress;
+//The main module
 moduleOneTest levelOne;
-int currentModule;
 
+//MoonJump cheatcode
+int jumpH = 1100;
+bool moonJumpTrue = false;
+
+int xWind = 0;
+bool wind = false;
 #endif // MAINHEADER_H_INCLUDED

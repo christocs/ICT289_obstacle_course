@@ -17,8 +17,6 @@ int main(int arc, char** argv)
 
     init();
 
-
-
     glutDisplayFunc(display);
 
     glutTimerFunc(TIMERMSECS, animate, 0);
@@ -52,6 +50,7 @@ void init()
     //Todo: Implement
 
     display()*/
+    glutSetKeyRepeat(0);
 
     resetCourse();
 
@@ -62,20 +61,14 @@ void startPlatform()
 {
     drawStartFloor();
 
-    if (currentModule == 0)
-    {
-        levelOne.startModuleOne();
-        drawEndFloor();
-    }
-
-
+    gravity = levelOne.startModuleOne(ball.prevPos, gravity, ball.radius);
 }
 
 void resetCourse()
 {
     //Define default gravity
     gravity.x = 0;
-    gravity.y = -0.2;
+    gravity.y = 0;
     gravity.z = 0;
 
     //Define default wind resistance
@@ -83,10 +76,6 @@ void resetCourse()
 
     //Set initial time before last tick (technically 0)
     deltaT_seconds = TIMERMSECS / 1000.0;
-
-    //Set current and previous modules to null
-    ball.currentModule = nullptr;
-    ball.prevModule = nullptr;
 
     //Set default move acceleration along an x-z plane
     ball.moveAcc = 0.2;
@@ -149,6 +138,9 @@ void display()
     	moduleContainer[i].display()
     }*/
 
+    if (ball.currPos.y < -2500)
+        resetCourse();
+
     glutSwapBuffers();
 }
 
@@ -163,6 +155,12 @@ void drawStartFloor()
         glVertex3f(500, -100, 1000);
         glVertex3f(-500, -100, 1000);
     glEnd();
+
+    /*if (ball.prevPos.x - ball.radius >= -500 && ball.prevPos.x- ball.radius <= 500 && ball.prevPos.z - ball.radius  >= -100 && ball.prevPos.z - ball.radius  <= 1000 && ball.prevPos.y >= 100 && ball.prevPos.y <= 100.1)
+        gravity.y = 0;
+
+    else
+        gravity.y = -0.2;/*
 
     glColor3f(1.0, 1.0, 0.0);
 
@@ -244,7 +242,7 @@ void animate(int value)
     }
     if (ball.moveDir.posZ == true && ball.currVel.z < ball.maxMoveSpeed)
     {
-        ball.currVel.z += ball.moveAcc * deltaT_seconds;
+        ball.currVel.z += ball.moveAcc * deltaT_seconds ;
     }
     if (ball.moveDir.negZ == true && ball.currVel.z > -ball.maxMoveSpeed)
     {
@@ -255,6 +253,21 @@ void animate(int value)
     {
         ball.currVel.y += ball.jumpAcc * deltaT_seconds;
 
+    }
+
+    if (ball.prevPos.y >= jumpH)
+    {
+        ball.jumpAcc = 0;
+    }
+
+   /* else if  (ball.prevPos.y > 120 && ball.prevPos.y  < jumpH)
+    {
+        ball.currVel.y -= 0.1;
+    }*/
+
+    else if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 )
+    {
+        ball.jumpAcc = 0.6;
     }
 
     addWindResistance();
@@ -278,7 +291,7 @@ void animate(int value)
     else
     {
         //determine what happens if ball is out of module
-        ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds;
+        ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds - xWind;
         if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
         {
             ball.rotation.y = 1;
@@ -288,7 +301,11 @@ void animate(int value)
         else
             ball.rotation.z = 0;
 
-        ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
+        if (gravity.z == 0)
+            ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
+
+        else
+             ball.currPos.z = ball.prevPos.z - gravity.z;
 
         if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
         {
@@ -299,20 +316,15 @@ void animate(int value)
         else
             ball.rotation.x = 0;
 
-        if (ball.currPos.y - ball.radius > 0)
-        {
-            ball.currPos.y = ball.prevPos.y + ball.currVel.y * deltaT_seconds + 0.5 * gravity.y * pow(deltaT_seconds,2.0);
-            ball.currVel.y = ball.currVel.y * gravity.y;
-        }
 
-        else
-        {
-             ball.currPos.y = ball.prevPos.y + ball.prevVel.y * deltaT_seconds;
-        }
+        ball.currPos.y = ball.prevPos.y + ball.currVel.y * deltaT_seconds + 0.5 * gravity.y * pow(deltaT_seconds,2.0);
+        ball.currVel.y = ball.currVel.y * gravity.y;
+
 
     }
 
-    std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
+    //std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
+    //std::cout << gravity.z << std::endl;
 
     ball.prevVel = ball.currVel;
     ball.prevPos = ball.currPos;
@@ -344,6 +356,36 @@ void keyboard(unsigned char key, int x, int y)
         ball.moveDir.negZ = true;
     }
 
+    if(key == 'm')
+    {
+        if (!moonJumpTrue)
+        {
+            jumpH = 3000;
+            moonJumpTrue = true;
+        }
+
+        else
+        {
+            jumpH = 1100;
+            moonJumpTrue = false;
+        }
+    }
+
+    if(key == 'n')
+    {
+        if (!wind)
+        {
+            xWind = -20;
+            wind = true;
+        }
+
+        else
+        {
+            xWind = 0;
+            wind = false;
+        }
+    }
+
     if(key == 'q')
     {
         resetCourse();
@@ -351,7 +393,7 @@ void keyboard(unsigned char key, int x, int y)
 
     if (key == 32)
     {
-        if (ball.currPos.y - ball.radius <= 0.1 && jumpPress == false)
+        if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 && jumpPress == false)
         {
               ball.moveDir.posY = true;
 
@@ -384,6 +426,7 @@ void noKeyboard(unsigned char key, int x, int y)
 
     if (key == 32)
     {
+        //gravity.y = -9.8;
         ball.moveDir.posY = false;
     }
 
