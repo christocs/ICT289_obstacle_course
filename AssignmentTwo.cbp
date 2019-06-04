@@ -36,6 +36,7 @@
 		<Unit filename="AxisAlignedPlane.h" />
 		<Unit filename="Module.cpp" />
 		<Unit filename="Module.h" />
+		<Unit filename="Object.h" />
 		<Unit filename="PlainModule.h" />
 		<Unit filename="XAlignedPlane.cpp" />
 		<Unit filename="XAlignedPlane.h" />
