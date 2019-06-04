@@ -7,10 +7,10 @@
 class AxisAlignedPlane
 {
 public:
-    AxisAlignedPlane() = delete;
+    AxisAlignedPlane(){};
 
     AxisAlignedPlane(double mainAxisValue, double axis2MinVal, double axis2MaxVal, double axis3MinVal, double axis3MaxVal, double bounceCo, const colour& cl):
-        mainAxis(mainAxisValue), axis2Min(axis2MinVal), axis2Max(axis2MaxVal), axis3Min(axis3MinVal), axis3Max(axis3MaxVal), bounceCoefficient(bounceCo), colour(cl) {}
+    mainAxis(mainAxisValue), axis2Min(axis2MinVal), axis2Max(axis2MaxVal), axis3Min(axis3MinVal), axis3Max(axis3MaxVal), bounceCoefficient(bounceCo), colour(cl) {}
 
     double getMainAxisValue() {return mainAxis;}
 
