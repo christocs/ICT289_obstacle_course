@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <cmath>
 
-
-
 int main(int arc, char** argv)
 {
     glutInit(&arc, argv);
@@ -27,14 +25,14 @@ int main(int arc, char** argv)
 
 void init()
 {
-    glClearColor (0.196078, 0.6, 0.8, 1.0);
+    glClearColor (1.0, 1.0, 1.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0, 1.0, 0.1, 1000000.0);
-    glEnable (GL_DEPTH_TEST);
+
     /*
     //Initialise modules
     3dPoint plainModulePos
@@ -50,41 +48,36 @@ void init()
     //Todo: Implement
 
     display()*/
-    glutSetKeyRepeat(0);
 
     resetCourse();
 
-}
-
-
-void startPlatform()
-{
-    drawStartFloor();
-
-    gravity = levelOne.startModuleOne(ball.prevPos, gravity, ball.radius);
 }
 
 void resetCourse()
 {
     //Define default gravity
     gravity.x = 0;
-    gravity.y = 0;
+    gravity.y = -9.8;
     gravity.z = 0;
 
     //Define default wind resistance
-    windResistance = 0.35;
+    windResistance = 0.8;
 
     //Set initial time before last tick (technically 0)
     deltaT_seconds = TIMERMSECS / 1000.0;
 
+    //Set current and previous modules to null
+    ball.currentModule = nullptr;
+    ball.prevModule = nullptr;
+
     //Set default move acceleration along an x-z plane
-    ball.moveAcc = 0.2;
+    ball.moveAcc = 1;
 
     //Maximum speed the ball can reach from only pressing move keys
-    ball.maxMoveSpeed = 10;
+    ball.maxMoveSpeed = 50;
 
     //Set default jump acceleration
-    ball.jumpAcc = 0.6;
+    ball.jumpAcc = 2;
 
     //Set defaulta acceleration
     ball.acc.x = 0;
@@ -113,13 +106,11 @@ void resetCourse()
     ball.moveDir.negY = false;
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
-    glutIgnoreKeyRepeat(1);
 }
 
 
 void display()
 {
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -128,18 +119,14 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-    startPlatform();
     drawStartFloor();
     drawBall();
 
     /*
     //Call display functions for each module
-    for (i = 0; i < moduleContainer.length; i++) {plane[0].x,plane[0].y,  plane[0].z
+    for (i = 0; i < moduleContainer.length; i++) {
     	moduleContainer[i].display()
     }*/
-
-    if (ball.currPos.y < -2500)
-        resetCourse();
 
     glutSwapBuffers();
 }
@@ -147,55 +134,13 @@ void display()
 
 void drawStartFloor()
 {
-    glColor3f(.48235, 0.98823, 0.0);
-
-    glBegin(GL_POLYGON);
-        glVertex3f(-500, -100,  -100);
-        glVertex3f(500, -100, -100);
-        glVertex3f(500, -100, 1000);
-        glVertex3f(-500, -100, 1000);
-    glEnd();
-
-    /*if (ball.prevPos.x - ball.radius >= -500 && ball.prevPos.x- ball.radius <= 500 && ball.prevPos.z - ball.radius  >= -100 && ball.prevPos.z - ball.radius  <= 1000 && ball.prevPos.y >= 100 && ball.prevPos.y <= 100.1)
-        gravity.y = 0;
-
-    else
-        gravity.y = -0.2;/*
-
-    glColor3f(1.0, 1.0, 0.0);
-
-}
-
-void drawEndFloor()
-{
-    /*point3D modulePlane[4] ;
-    modulePlane = levelOne.getPlaneSize();
-
     glColor3f(1.0, 0.0, 0.0);
-
-
     glBegin(GL_POLYGON);
-        glVertex3f(modulePlane[3].x/1.5, -100,  modulePlane[3].z);
-        glVertex3f(modulePlane[4].x/1.5, -100, modulePlane[3].z);
-        glVertex3f(modulePlane[4].x/1.5, -100, modulePlane[3].z + 250);
-        glVertex3f(modulePlane[3].x/1.5, -100, modulePlane[3].z + 250);
+    glVertex3f(-1000, -100,  -1000);
+    glVertex3f(1000, -100, -1000);
+    glVertex3f(1000, -100, 5000);
+    glVertex3f(-1000, -100, 5000);
     glEnd();
-
-    glColor3f(1.0, 1.0, 0.0);
-
-    glBegin(GL_POLYGON);
-        glVertex3f(-250, -100,  500);
-        glVertex3f(250, -100, 500);
-        glVertex3f(250, -100, 750);
-        glVertex3f(-250, -100, 750);
-    glEnd();
-
-    if (ball.currPos.x > modulePlane[3].x/1.5 && ball.currPos.x < modulePlane[4].x/1.5 && ball.currPos.z > modulePlane[3].z&& ball.currPos.z < modulePlane[3].z + 250)
-    {
-        resetCourse();
-        currentModule++;
-    } */
-
 
 }
 
@@ -205,12 +150,13 @@ void drawBall()
     glPushMatrix ();
 
     glTranslatef (ball.currPos.x,ball.currPos.y,ball.currPos.z);
-    glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, ball.rotation.z );
+    glRotatef (ball.rotationAngle, ball.rotation.x, ball.rotation.y, 0 );
 
     glutSolidSphere(ball.radius, ball.radius / 8, ball.radius / 8);
     glPopMatrix();
 
-
+    //ball.rotation.x = 0;
+    // ball.rotation.y = 0;
 }
 
 
@@ -242,32 +188,11 @@ void animate(int value)
     }
     if (ball.moveDir.posZ == true && ball.currVel.z < ball.maxMoveSpeed)
     {
-        ball.currVel.z += ball.moveAcc * deltaT_seconds ;
+        ball.currVel.z += ball.moveAcc * deltaT_seconds;
     }
     if (ball.moveDir.negZ == true && ball.currVel.z > -ball.maxMoveSpeed)
     {
         ball.currVel.z -= ball.moveAcc * deltaT_seconds;
-    }
-
-    if (ball.moveDir.posY == true && ball.currVel.y < ball.maxMoveSpeed)
-    {
-        ball.currVel.y += ball.jumpAcc * deltaT_seconds;
-
-    }
-
-    if (ball.prevPos.y >= jumpH)
-    {
-        ball.jumpAcc = 0;
-    }
-
-   /* else if  (ball.prevPos.y > 120 && ball.prevPos.y  < jumpH)
-    {
-        ball.currVel.y -= 0.1;
-    }*/
-
-    else if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 )
-    {
-        ball.jumpAcc = 0.6;
     }
 
     addWindResistance();
@@ -291,40 +216,12 @@ void animate(int value)
     else
     {
         //determine what happens if ball is out of module
-        ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds - xWind;
-        if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
-        {
-            ball.rotation.y = 1;
-            ball.rotationAngle =  ball.rotationAngle + 6;
-        }
-
-        else
-            ball.rotation.z = 0;
-
-        if (gravity.z == 0)
-            ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
-
-        else
-             ball.currPos.z = ball.prevPos.z - gravity.z;
-
-        if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
-        {
-            ball.rotation.x = 1;
-            ball.rotationAngle =  ball.rotationAngle + 6;
-        }
-
-        else
-            ball.rotation.x = 0;
-
-
-        ball.currPos.y = ball.prevPos.y + ball.currVel.y * deltaT_seconds + 0.5 * gravity.y * pow(deltaT_seconds,2.0);
-        ball.currVel.y = ball.currVel.y * gravity.y;
-
-
+        ball.currPos.x = ball.prevPos.x + ball.currVel.x * deltaT_seconds;
+        ball.currPos.z = ball.prevPos.z + ball.currVel.z * deltaT_seconds;
+        ball.currPos.y = ball.prevPos.y + ball.prevVel.y * deltaT_seconds;
     }
 
-    //std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
-    //std::cout << gravity.z << std::endl;
+    std::cout << "x: " << ball.currPos.x << " y: " << ball.currPos.y << " z: " << ball.currPos.z << std::endl;
 
     ball.prevVel = ball.currVel;
     ball.prevPos = ball.currPos;
@@ -356,49 +253,9 @@ void keyboard(unsigned char key, int x, int y)
         ball.moveDir.negZ = true;
     }
 
-    if(key == 'm')
-    {
-        if (!moonJumpTrue)
-        {
-            jumpH = 3000;
-            moonJumpTrue = true;
-        }
-
-        else
-        {
-            jumpH = 1100;
-            moonJumpTrue = false;
-        }
-    }
-
-    if(key == 'n')
-    {
-        if (!wind)
-        {
-            xWind = -20;
-            wind = true;
-        }
-
-        else
-        {
-            xWind = 0;
-            wind = false;
-        }
-    }
-
     if(key == 'q')
     {
         resetCourse();
-    }
-
-    if (key == 32)
-    {
-        if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 && jumpPress == false)
-        {
-              ball.moveDir.posY = true;
-
-              jumpPress = false;
-        }
     }
 }
 
@@ -423,13 +280,6 @@ void noKeyboard(unsigned char key, int x, int y)
     {
         ball.moveDir.negZ = false;
     }
-
-    if (key == 32)
-    {
-        //gravity.y = -9.8;
-        ball.moveDir.posY = false;
-    }
-
 }
 
 void addWindResistance()

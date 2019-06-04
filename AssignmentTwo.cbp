@@ -36,7 +36,6 @@
 		<Unit filename="AxisAlignedPlane.h" />
 		<Unit filename="Module.cpp" />
 		<Unit filename="Module.h" />
-		<Unit filename="Object.h" />
 		<Unit filename="PlainModule.h" />
 		<Unit filename="XAlignedPlane.cpp" />
 		<Unit filename="XAlignedPlane.h" />
@@ -50,8 +49,6 @@
 		<Unit filename="direction.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mainHeader.h" />
-		<Unit filename="moduleOneTest.cpp" />
-		<Unit filename="moduleOneTest.h" />
 		<Unit filename="plainModule.cpp" />
 		<Unit filename="point3D.h" />
 		<Unit filename="rectangleCorners.h" />
