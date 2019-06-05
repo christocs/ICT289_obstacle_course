@@ -29,7 +29,7 @@ void Coin::display()
     //Draw coin if it isn't collected
     if (collected == false)
     {
-        glColor3f(COLOUR_R, COLOUR_G, COLOUR_B);
+        glColor3f(COLOUR4_R, COLOUR4_G, COLOUR4_B);
         glPushMatrix();
         glTranslatef(pos.x, pos.y, pos.z);
         glutSolidSphere(rad, 8, 8);

@@ -4,9 +4,9 @@
 #include "point3D.h"
 #include "Object.h"
 
-#define COLOUR_R 1
-#define COLOUR_G 1
-#define COLOUR_B 0
+#define COLOUR4_R 1
+#define COLOUR4_G 1
+#define COLOUR4_B 0
 
 class Coin: public Object
 {

@@ -14,9 +14,9 @@ YMovingPlatform::YMovingPlatform(float xMin, float xMax, float y, float zMin, fl
     beginUp = upStart;
 
     colour c;
-    c.r = COLOUR_R;
-    c.g = COLOUR_G;
-    c.b = COLOUR_B;
+    c.r = COLOUR3_R;
+    c.g = COLOUR3_G;
+    c.b = COLOUR3_B;
 
     //Set top plane
     yPlane.setMainAxisValue(yMaxBegin);

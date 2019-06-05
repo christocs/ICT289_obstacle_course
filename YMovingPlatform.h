@@ -7,9 +7,9 @@
 #include "YAlignedPlane.h"
 #include "ZAlignedPlane.h"
 
-#define COLOUR_R 0.98823
-#define COLOUR_G 0.48235
-#define COLOUR_B 0
+#define COLOUR3_R 0.98823
+#define COLOUR3_G 0.48235
+#define COLOUR3_B 0
 
 class YMovingPlatform: public Object
 {
