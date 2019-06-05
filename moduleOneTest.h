@@ -1,7 +1,7 @@
 #ifndef MODULEONETEST_H_INCLUDED
 #define MODULEONETEST_H_INCLUDED
 #include <iostream>
-#include <freeglut.h>
+#include <GL/freeglut.h>
 #include "point3D.h"
 #include "YAlignedPlane.h"
 #include "XAlignedPlane.h"

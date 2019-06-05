@@ -1,7 +1,7 @@
 #ifndef MAINHEADER_H
 #define MAINHEADER_H
 
-#include <freeglut.h>
+#include <GL/freeglut.h>
 #include "Module.h"
 #include "ball.h"
 #include "moduleOneTest.h"

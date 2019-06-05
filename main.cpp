@@ -35,21 +35,7 @@ void init()
     glLoadIdentity();
     gluPerspective(60.0, 1.0, 0.1, 1000000.0);
     glEnable (GL_DEPTH_TEST);
-    /*
-    //Initialise modules
-    3dPoint plainModulePos
-    plainModulePos.x = 0
-    plainModulePos.y = 0
-    plainModulePos.z = 0
-    PlainModule plainModule(plainModulePos)
 
-    //Add modules to container
-    moduleContainer.insert(plainModule)
-
-    //Check modules do not have overlapping bounds
-    //Todo: Implement
-
-    display()*/
     glutSetKeyRepeat(0);
 
     resetCourse();
