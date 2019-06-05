@@ -94,6 +94,7 @@ BasicPlatform startPlatform(-500, 500, -100, -100, 1000, DEFAULT_PLAT_DEPTH, 0, 
 BasicPlatform plat1(-400, 400, -100, 1000, 3500, DEFAULT_PLAT_DEPTH, 0, 0);
 BasicPlatform plat2(-400, 400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
 BasicPlatform sidePlat1(1600, 2400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
+BasicPlatform sidePlat2(-2400, -1600, 100, 9250, 9750, DEFAULT_PLAT_DEPTH, 0, 0);
 
 Coin coin1(2000, 0, 4750, 50);
 Coin coin2(-2000, 200, 9500, 50);
