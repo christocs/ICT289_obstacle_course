@@ -42,9 +42,12 @@ void init()
     objects.push_back(&plat1);
     objects.push_back(&plat2);
     objects.push_back(&sidePlat1);
+    objects.push_back(&sidePlat2);
     objects.push_back(&coin1);
+    objects.push_back(&coin2);
     objects.push_back(&xMovPlat1);
     objects.push_back(&xMovPlat2);
+    objects.push_back(&tempPlat1);
 
     resetCourse();
 }

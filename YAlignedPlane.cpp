@@ -78,7 +78,6 @@ bool YAlignedPlane::touchingFloor(const point3D& currPos, float radius)
                 detected = true;
             }
         }
-        detected = true;
     }
 
     return detected;
