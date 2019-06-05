@@ -34,15 +34,9 @@ void init()
 
     glutSetKeyRepeat(0);
 
+    objects.push_back(&startPlatform);
+
     resetCourse();
-}
-
-
-void startPlatform()
-{
-    drawStartFloor();
-
-    levelOne.startModuleOne(ball.prevPos, ball.acc, ball.radius);
 }
 
 void resetCourse()
@@ -90,13 +84,19 @@ void resetCourse()
     ball.moveDir.negY = false;
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
+
     glutIgnoreKeyRepeat(1);
+
+    //Reset game objects
+    for (unsigned i = 0; i < objects.size(); i++)
+    {
+        objects.at(i)->reset();
+    }
 }
 
 
 void display()
 {
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -105,24 +105,15 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-    startPlatform();
-    drawStartFloor();
     drawBall();
 
+    //Display game objects
+    for (unsigned i = 0; i < objects.size(); i++)
+    {
+        objects.at(i)->display();
+    }
+
     glutSwapBuffers();
-}
-
-
-void drawStartFloor()
-{
-    glColor3f(.48235, 0.98823, 0.0);
-
-    glBegin(GL_POLYGON);
-        glVertex3f(-500, -100,  -100);
-        glVertex3f(500, -100, -100);
-        glVertex3f(500, -100, 1000);
-        glVertex3f(-500, -100, 1000);
-    glEnd();
 }
 
 void drawBall()
@@ -147,7 +138,7 @@ void animate(int value)
 
     ball.currTime = glutGet(GLUT_ELAPSED_TIME);
     deltaT_seconds = ball.currTime - ball.prevTime;
-    std::cout << deltaT_seconds << "!!!!" << std::endl;
+
     //Apply ball acceleratino to velocity
     ball.currVel.x = ball.prevVel.x;
     ball.currVel.x += ball.acc.x * deltaT_seconds;
@@ -231,6 +222,13 @@ void animate(int value)
 
     std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
 
+   //Animate game objects
+    for (unsigned i = 0; i < objects.size(); i++)
+    {
+        objects.at(i)->animate();
+    }
+
+    //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
         resetCourse();
 

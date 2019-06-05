@@ -34,9 +34,6 @@ struct ball
     //Radius of ball in metres
     float radius;
 
-    //mass of ball in kg
-    float mass;
-
     //Time of the last tick
     float prevTime;
 
@@ -50,12 +47,6 @@ struct ball
     float jumpAcc;
 
     float maxMoveSpeed;
-
-    //Pointer to the module the ball is currently in
-    Module *currentModule;
-
-    //Pointer to the module the ball was in last tick
-    Module *prevModule;
 
     direction moveDir;
 };

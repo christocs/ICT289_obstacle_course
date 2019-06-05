@@ -21,7 +21,7 @@ BasicPlatform::BasicPlatform(float xMin, float xMax, float y, float zMin, float 
     yPlane.setColour(c1);
 
     //Set left-side x-aligned wall
-    xPlane1.setMainAxisValue(xMin);
+    xPlane1.setMainAxisValue(xMax);
     xPlane1.setAxis2MinVal(y - depth);
     xPlane1.setAxis2MaxVal(y);
     xPlane1.setAxis3MinVal(zMin);
@@ -30,13 +30,13 @@ BasicPlatform::BasicPlatform(float xMin, float xMax, float y, float zMin, float 
     xPlane1.setColour(c2);
 
     //Set right-side x-aligned wall
-    xPlane1.setMainAxisValue(xMax);
-    xPlane1.setAxis2MinVal(y - depth);
-    xPlane1.setAxis2MaxVal(y);
-    xPlane1.setAxis3MinVal(zMin);
-    xPlane1.setAxis3MaxVal(zMax);
-    xPlane1.setBounceCoefficient(wallBounce);
-    xPlane1.setColour(c2);
+    xPlane2.setMainAxisValue(xMin);
+    xPlane2.setAxis2MinVal(y - depth);
+    xPlane2.setAxis2MaxVal(y);
+    xPlane2.setAxis3MinVal(zMin);
+    xPlane2.setAxis3MaxVal(zMax);
+    xPlane2.setBounceCoefficient(wallBounce);
+    xPlane2.setColour(c2);
 
     //Set front-side z-aligned wall (closest to camera)
     zPlane1.setMainAxisValue(zMin);
@@ -48,13 +48,13 @@ BasicPlatform::BasicPlatform(float xMin, float xMax, float y, float zMin, float 
     zPlane1.setColour(c2);
 
     //Set back-side z-aligned wall (furthest from camera)
-    zPlane1.setMainAxisValue(zMax);
-    zPlane1.setAxis2MinVal(xMin);
-    zPlane1.setAxis2MaxVal(xMax);
-    zPlane1.setAxis3MinVal(y - depth);
-    zPlane1.setAxis3MaxVal(y);
-    zPlane1.setBounceCoefficient(wallBounce);
-    zPlane1.setColour(c2);
+    zPlane2.setMainAxisValue(zMax);
+    zPlane2.setAxis2MinVal(xMin);
+    zPlane2.setAxis2MaxVal(xMax);
+    zPlane2.setAxis3MinVal(y - depth);
+    zPlane2.setAxis3MaxVal(y);
+    zPlane2.setBounceCoefficient(wallBounce);
+    zPlane2.setColour(c2);
 }
 
 void BasicPlatform::display()

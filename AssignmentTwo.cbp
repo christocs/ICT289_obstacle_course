@@ -52,8 +52,6 @@
 		<Unit filename="direction.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mainHeader.h" />
-		<Unit filename="moduleOneTest.cpp" />
-		<Unit filename="moduleOneTest.h" />
 		<Unit filename="plainModule.cpp" />
 		<Unit filename="point3D.h" />
 		<Extensions>

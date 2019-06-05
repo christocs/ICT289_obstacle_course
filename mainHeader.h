@@ -2,10 +2,12 @@
 #define MAINHEADER_H
 
 #include <GL/freeglut.h>
-#include "Module.h"
 #include "ball.h"
-#include "moduleOneTest.h"
 #include "point3D.h"
+#include <vector>
+
+#include "Object.h"
+#include "BasicPlatform.h"
 
 //The time in milliseconds between timer ticks
 #define TIMERMSECS 2
@@ -32,6 +34,9 @@
 #define DEFAULT_G 0
 #define DEFAULT_B 0
 
+//Default bounce coefficient
+#define DEFAULT_BOUNCE 0.8
+
 //Camera values
 #define FOV 60
 #define NEAR_VAL 0.1
@@ -57,13 +62,10 @@ void keyboard(unsigned char key, int x, int y);
 void noKeyboard(unsigned char key, int x, int y);
 void animate(int value);
 void addWindResistance(point3D& vel);
-void startPlatform();
 void drawEndFloor();
 
 //Has jump been pressed
 bool jumpPress;
-//The main module
-moduleOneTest levelOne;
 
 //MoonJump cheatcode
 int jumpH = 1100;
@@ -71,5 +73,10 @@ bool moonJumpTrue = false;
 
 int xWind = 0;
 bool wind = false;
+
+//Pointer to game objects
+std::vector<Object*> objects;
+
+BasicPlatform startPlatform(-500, 500, -100, -100, 1000, 50, DEFAULT_BOUNCE, DEFAULT_BOUNCE);
 
 #endif // MAINHEADER_H
