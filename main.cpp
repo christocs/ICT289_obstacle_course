@@ -437,7 +437,7 @@ void keyboard(unsigned char key, int x, int y)
               jumpPress = false;
         }
     }
-    if (key=='p'){
+    if (key=='p' && stop==false){
         stop=true;
         dispImages();
         glutTimerFunc(5000,exitProg,0);
