@@ -1,5 +1,5 @@
-#ifndef BASIC_PLATFORM_H
-#define BASIC_PLATFORM_H
+#ifndef X_MOVING_PLATFORM_H
+#define X_MOVING_PLATFORM_H
 
 #include "Object.h"
 
@@ -15,16 +15,16 @@
 #define COLOUR2_G 0.62352
 #define COLOUR2_B 0.4
 
-class BasicPlatform: public Object
+class XMovingPlatform: public Object
 {
 public:
-    BasicPlatform() = delete;
+    XMovingPlatform() = delete;
 
-    void animate(const point3D& currPos, float radius, float t) {}
+    XMovingPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce, float dist, float s, bool leftStart);
 
-    void reset() {}
+    void animate(const point3D& currPos, float radius, float t);
 
-    BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce);
+    void reset();
 
     void display();
 
@@ -40,5 +40,14 @@ private:
     YAlignedPlane yPlane;
 
     ZAlignedPlane zPlane1, zPlane2;
+
+    float xMinBegin, xMaxBegin;
+
+    bool beginLeft;
+
+    float distance, speed;
+
+    //Movement direction of platform
+    bool left;
 };
 #endif

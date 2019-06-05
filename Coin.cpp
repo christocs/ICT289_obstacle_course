@@ -11,7 +11,7 @@ Coin::Coin(float x, float y, float z, float radius)
     reset();
 }
 
-void Coin::animate(const point3D& ballPos, float radius)
+void Coin::animate(const point3D& ballPos, float radius, float t)
 {
     //Check for collision of coin if not collected, mark if collected if collision occurs
     if (collected == false &&

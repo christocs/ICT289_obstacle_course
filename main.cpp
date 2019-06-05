@@ -37,11 +37,14 @@ void init()
 
     glutSetKeyRepeat(0);
 
+    //Add game objects
     objects.push_back(&startPlatform);
     objects.push_back(&plat1);
     objects.push_back(&plat2);
     objects.push_back(&sidePlat1);
     objects.push_back(&coin1);
+    objects.push_back(&xMovPlat1);
+    objects.push_back(&xMovPlat2);
 
     resetCourse();
 }
@@ -148,14 +151,14 @@ void animate(int value)
     glutKeyboardFunc(keyboard);
     glutKeyboardUpFunc(noKeyboard);
 
+    ball.currTime = glutGet(GLUT_ELAPSED_TIME);
+    deltaT_seconds = ball.currTime - ball.prevTime;
+
     //Animate game objects
     for (unsigned i = 0; i < objects.size(); i++)
     {
-        objects[i]->animate(ball.currPos, ball.radius);
+        objects[i]->animate(ball.currPos, ball.radius, deltaT_seconds);
     }
-
-    ball.currTime = glutGet(GLUT_ELAPSED_TIME);
-    deltaT_seconds = ball.currTime - ball.prevTime;
 
     //Apply ball acceleratino to velocity
     ball.currVel.x = ball.prevVel.x;

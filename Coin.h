@@ -15,7 +15,7 @@ public:
 
     Coin(float x, float y, float z, float radius);
 
-    void animate(const point3D& ballPos, float radius);
+    void animate(const point3D& ballPos, float radius, float t);
 
     void display();
 

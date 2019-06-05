@@ -6,7 +6,7 @@
 class Object
 {
 public:
-    virtual void animate(const point3D& currPos, float radius) = 0;
+    virtual void animate(const point3D& currPos, float radius, float t) = 0;
 
     virtual void display() = 0;
 

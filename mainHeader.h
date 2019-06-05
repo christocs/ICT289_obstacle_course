@@ -9,6 +9,7 @@
 #include "Object.h"
 #include "BasicPlatform.h"
 #include "Coin.h"
+#include "XMovingPlatform.h"
 
 //The time in milliseconds between timer ticks
 #define TIMERMSECS 11
@@ -52,6 +53,9 @@
 
 #define DEFAULT_PLAT_DEPTH 900
 
+#define X_MOVING_PLATFORM_MOVE_SPEED 1
+#define X_MOVING_PLATFORM_MOVE_DISTANCE 3000
+
 //Camera values
 #define FOV 60
 #define NEAR_VAL 0.1
@@ -84,13 +88,16 @@ bool moonJumpTrue = false;
 
 bool wind = false;
 
-//Game objects initialisation
+/* Game objects initialisation */
 BasicPlatform startPlatform(-500, 500, -100, -100, 1000, DEFAULT_PLAT_DEPTH, 0, 0);
 BasicPlatform plat1(-400, 400, -100, 1000, 3500, DEFAULT_PLAT_DEPTH, 0, 0);
 BasicPlatform plat2(-400, 400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
 BasicPlatform sidePlat1(1600, 2400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
 
 Coin coin1(2000, 0, 4850, 50);
+
+XMovingPlatform xMovPlat1(-600, 600, -100, 6000, 7200, DEFAULT_PLAT_DEPTH, 0, 0, X_MOVING_PLATFORM_MOVE_DISTANCE, X_MOVING_PLATFORM_MOVE_SPEED, true);
+XMovingPlatform xMovPlat2(-600, 600, -100, 7800, 9000, DEFAULT_PLAT_DEPTH, 0, 0, X_MOVING_PLATFORM_MOVE_DISTANCE, X_MOVING_PLATFORM_MOVE_SPEED, false);
 
 //Pointers to game objects
 std::vector<Object*> objects;
