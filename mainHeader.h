@@ -18,7 +18,9 @@
 //Wind resistance coefficient to ball's velocity every millisecond
 #define WIND_COEFFICIENT 0.35
 //Acceleration of gravity
-#define GRAVITY_ACC -0.5
+#define GRAVITY_ACC -2
+//Default jump acceleration
+#define DEFAULT_JUMP_ACC 10
 
 //Colour values
 #define BALL_R 0
@@ -34,6 +36,11 @@
 #define DEFAULT_G 0
 #define DEFAULT_B 0
 
+//Jump height when moon jump cheat code is activated
+#define MOON_JUMP_HEIGHT 3000
+//Default jump height
+#define DEFAULT_JUMP_HEIGHT 1100
+
 //Default bounce coefficient
 #define DEFAULT_BOUNCE 0.8
 
@@ -41,6 +48,8 @@
 #define MAX_VEL 99999
 
 #define WIND_X_VAL 20
+
+#define DEFAULT_PLAT_DEPTH 900
 
 //Camera values
 #define FOV 60
@@ -69,17 +78,17 @@ void animate(int value);
 void addWindResistance(point3D& vel);
 void drawEndFloor();
 
-//Has jump been pressed
-bool jumpPress;
-
 //MoonJump cheatcode
-int jumpH = 1100;
 bool moonJumpTrue = false;
 
 bool wind = false;
 
 //Game objects initialisation
-BasicPlatform startPlatform(-500, 500, -100, -100, 1000, 500, DEFAULT_BOUNCE, DEFAULT_BOUNCE);
+//(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce)
+BasicPlatform startPlatform(-500, 500, -100, -100, 1000, DEFAULT_PLAT_DEPTH, 0, 0);
+BasicPlatform plat1(-400, 400, -100, 1000, 3500, DEFAULT_PLAT_DEPTH, 0, 0);
+BasicPlatform plat2(-400, 400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
+BasicPlatform sidePlat1(1600, 2400, -100, 4500, 5000, DEFAULT_PLAT_DEPTH, 0, 0);
 
 //Pointers to game objects
 std::vector<Object*> objects;

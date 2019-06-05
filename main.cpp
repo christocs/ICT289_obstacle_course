@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <cmath>
 
+//Defines what y-movement counts as just 'jitter'
+#define Y_JITTER 9
+
 int main(int arc, char** argv)
 {
     glutInit(&arc, argv);
@@ -35,6 +38,9 @@ void init()
     glutSetKeyRepeat(0);
 
     objects.push_back(&startPlatform);
+    objects.push_back(&plat1);
+    objects.push_back(&plat2);
+    objects.push_back(&sidePlat1);
 
     resetCourse();
 }
@@ -58,7 +64,10 @@ void resetCourse()
     ball.maxMoveSpeed = 10;
 
     //Set default jump acceleration
-    ball.jumpAcc = 0.6;
+    ball.jumpAcc = DEFAULT_JUMP_ACC;
+
+    ball.jumpH = DEFAULT_JUMP_HEIGHT;
+    ball.jumpStartH = -99999;
 
     //Set defaulta acceleration
     ball.acc.x = 0;
@@ -155,7 +164,7 @@ void animate(int value)
     ball.currVel.z = ball.prevVel.z;
     ball.currVel.z += ball.acc.z * deltaT_seconds;
 
-    //add acceleration onto velocity when keys pressed
+    //add x and z-plane acceleration onto velocity when keys pressed
     if (ball.moveDir.posX == true && ball.currVel.x < ball.maxMoveSpeed)
     {
         ball.currVel.x += ball.moveAcc * deltaT_seconds;
@@ -173,25 +182,14 @@ void animate(int value)
         ball.currVel.z -= ball.moveAcc * deltaT_seconds;
     }
 
-    if (ball.moveDir.posY == true && ball.currVel.y < ball.maxMoveSpeed)
+    //add jump acceleration upon valid jumps, which is the spacebar has been held down since touching the ground and max height isn't reached
+    if (ball.moveDir.posY == true && (ball.currPos.y < ball.jumpStartH + ball.jumpH))
     {
         ball.currVel.y += ball.jumpAcc * deltaT_seconds;
-
     }
-
-    if (ball.prevPos.y >= jumpH)
+    else
     {
-        ball.jumpAcc = 0;
-    }
-
-    /* else if  (ball.prevPos.y > 120 && ball.prevPos.y  < jumpH)
-     {
-         ball.currVel.y -= 0.1;
-     }*/
-
-    else if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 )
-    {
-        ball.jumpAcc = 0.6;
+        ball.moveDir.posY = false;
     }
 
     addWindResistance(ball.currVel);
@@ -262,6 +260,10 @@ void animate(int value)
         ball.currVel.z = -MAX_VEL;
     }
 
+    //Remove y-axis jitter
+    if (ball.currVel.y < Y_JITTER && ball.currVel.y > -Y_JITTER)
+        ball.currVel.y = 0;
+
     //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
 
     float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
@@ -297,8 +299,8 @@ void animate(int value)
     ball.prevPos = ball.currPos;
     ball.prevTime = ball.currTime;
 
-    std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
-
+    //std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
+    std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
         resetCourse();
@@ -333,13 +335,13 @@ void keyboard(unsigned char key, int x, int y)
     {
         if (!moonJumpTrue)
         {
-            jumpH = 3000;
+            ball.jumpH = 3000;
             moonJumpTrue = true;
         }
 
         else
         {
-            jumpH = 1100;
+            ball.jumpH = 1100;
             moonJumpTrue = false;
         }
     }
@@ -366,11 +368,20 @@ void keyboard(unsigned char key, int x, int y)
     //Detects if spacebar is pressed
     if (key == 32)
     {
-        if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 && jumpPress == false)
+        ball.moveDir.posY = false;
+        //Detects if jump can be commenced
+        for (unsigned i = 0; i < objects.size() && ball.moveDir.posY == false; i++)
         {
-            ball.moveDir.posY = true;
+            ball.moveDir.posY = objects[i]->touchingFloor(ball.currPos, ball.radius);
+        }
 
-            jumpPress = false;
+        std::cout << "jump" << ball.moveDir.posY << std::endl;
+
+        //Set start height if starting to jump
+        if (ball.moveDir.posY)
+        {
+            std::cout << "floor detected on jump" << std::endl;
+            ball.jumpStartH = ball.currPos.y;
         }
     }
 }

@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+#define Y_Z_COLLISION_MARGIN 4
+
 void XAlignedPlane::display()
 {
     glColor3f(colour.r, colour.g, colour.b);
@@ -39,12 +41,12 @@ bool XAlignedPlane::collisionDetected(const point3D& vel, const point3D& prevPos
     if (newPos.x <= mainAxis + radius && newPos.x >= mainAxis - radius)
     {
         //Check if secondary axis aligns
-        if (newPos.y <= std::max(axis2Min, axis2Max) &&
-            newPos.y >= std::min(axis2Min, axis2Max) )
+        if ((newPos.y  - (radius / Y_Z_COLLISION_MARGIN)) <= std::max(axis2Min, axis2Max) &&
+            (newPos.y + (radius / Y_Z_COLLISION_MARGIN)) >= std::min(axis2Min, axis2Max) )
         {
             //Check if third axis aligns
-            if (newPos.z <= std::max(axis3Min, axis3Max) &&
-                newPos.z >= std::min(axis3Min, axis3Max) )
+            if ((newPos.z - (radius / Y_Z_COLLISION_MARGIN)) <= std::max(axis3Min, axis3Max) &&
+                (newPos.z - (radius / Y_Z_COLLISION_MARGIN)) >= std::min(axis3Min, axis3Max) )
             {
                 detected = true;
             }

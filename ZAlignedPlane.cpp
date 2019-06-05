@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+#define X_Y_COLLISION_MARGIN 4
+
 void ZAlignedPlane::display()
 {
     glColor3f(colour.r, colour.g, colour.b);
@@ -40,12 +42,12 @@ bool ZAlignedPlane::collisionDetected(const point3D& vel, const point3D& prevPos
     if (newPos.z <= mainAxis + radius && newPos.z >= mainAxis - radius)
     {
         //Check if secondary axis aligns
-        if (newPos.x <= std::max(axis2Min, axis2Max) &&
-            newPos.x >= std::min(axis2Min, axis2Max) )
+        if ((newPos.x - (radius / X_Y_COLLISION_MARGIN)) <= std::max(axis2Min, axis2Max) &&
+            (newPos.x + (radius / X_Y_COLLISION_MARGIN)) >= std::min(axis2Min, axis2Max) )
         {
             //Check if third axis aligns
-            if (newPos.y <= std::max(axis3Min, axis3Max) &&
-                newPos.y >= std::min(axis3Min, axis3Max) )
+            if ((newPos.y - (radius / X_Y_COLLISION_MARGIN)) <= std::max(axis3Min, axis3Max) &&
+                (newPos.y + (radius / X_Y_COLLISION_MARGIN)) >= std::min(axis3Min, axis3Max) )
             {
                 detected = true;
             }

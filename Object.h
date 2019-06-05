@@ -14,6 +14,8 @@ public:
 
     virtual bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius) = 0;
 
+    virtual bool touchingFloor(const point3D& currPos, float radius) = 0;
+
     void reset() {}
 };
 #endif

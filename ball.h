@@ -46,9 +46,17 @@ struct ball
     //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
     float jumpAcc;
 
+    //Maximum speed that can be achieved from control inputs
     float maxMoveSpeed;
 
+    //Directions of movement
     direction moveDir;
+
+    //Maximum height the ball can jump
+    int jumpH;
+
+    //Height of the ball before commencing jump
+    float jumpStartH;
 };
 
 #endif // BALL_H

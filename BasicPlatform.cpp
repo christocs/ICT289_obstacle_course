@@ -1,5 +1,6 @@
 #include "BasicPlatform.h"
 #include <iostream>
+#include <GL/freeglut.h>
 
 BasicPlatform::BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce)
 {
@@ -65,6 +66,14 @@ void BasicPlatform::display()
     yPlane.display();
     zPlane1.display();
     zPlane2.display();
+
+    //Draw button of platform
+    glBegin(GL_POLYGON);
+    glVertex3f(yPlane.getAxis2MinValue(), xPlane1.getAxis2MinValue(), yPlane.getAxis3MinValue());
+    glVertex3f(yPlane.getAxis2MinValue(), xPlane1.getAxis2MinValue(), yPlane.getAxis3MaxValue());
+    glVertex3f(yPlane.getAxis2MaxValue(), xPlane1.getAxis2MinValue(), yPlane.getAxis3MaxValue());
+    glVertex3f(yPlane.getAxis2MaxValue(), xPlane1.getAxis2MinValue(), yPlane.getAxis3MinValue());
+    glEnd();
 }
 
 point3D BasicPlatform::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
@@ -175,7 +184,7 @@ bool BasicPlatform::collisionDetected(const point3D& vel, const point3D& prevPos
     return collisions;
 }
 
-bool BasicPlatform::touchingFloor(const point3D& vel, const point3D& prevPos, float radius)
+bool BasicPlatform::touchingFloor(const point3D& currPos, float radius)
 {
-    return yPlane.touchingFloor(vel, prevPos, radius);
+    return yPlane.touchingFloor(currPos, radius);
 }

@@ -28,7 +28,7 @@ public:
 
     bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius);
 
-    bool touchingFloor(const point3D& vel, const point3D& prevPos, float radius);
+    bool touchingFloor(const point3D& currPos, float radius);
 
 private:
     XAlignedPlane xPlane1, xPlane2;
