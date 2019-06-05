@@ -151,30 +151,28 @@ void resetCourse()
 
 void display()
 {
-    if(!stop){
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-        //Look at the ball's current position
-        gluLookAt((ball.currPos.x), (ball.currPos.y + 1000), (ball.currPos.z-1000), (ball.currPos.x), (ball.currPos.y), (ball.currPos.z), 0, 1, 0);
+    //Look at the ball's current position
+    gluLookAt((ball.currPos.x), (ball.currPos.y + 1000), (ball.currPos.z-1000), (ball.currPos.x), (ball.currPos.y), (ball.currPos.z), 0, 1, 0);
 
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-        startPlatform();
-        drawStartFloor();
-        drawBall();
+    startPlatform();
+    drawStartFloor();
+    drawBall();
 
-        /*
-        //Call display functions for each module
-        for (i = 0; i < moduleContainer.length; i++) {plane[0].x,plane[0].y,  plane[0].z
-            moduleContainer[i].display()
-        }*/
+    /*
+    //Call display functions for each module
+    for (i = 0; i < moduleContainer.length; i++) {plane[0].x,plane[0].y,  plane[0].z
+        moduleContainer[i].display()
+    }*/
 
-        if (ball.currPos.y < -2500)
-            resetCourse();
+    if (ball.currPos.y < -2500)
+        resetCourse();
 
-        glutSwapBuffers();
-    }
+    glutSwapBuffers();
 }
 
 
