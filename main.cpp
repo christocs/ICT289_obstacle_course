@@ -6,7 +6,7 @@
 #include <cmath>
 
 //Defines what y-movement counts as just 'jitter'
-#define Y_JITTER 9
+#define Y_JITTER 0
 
 int main(int arc, char** argv)
 {
