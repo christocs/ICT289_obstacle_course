@@ -41,13 +41,32 @@ void init()
     objects.push_back(&startPlatform);
     objects.push_back(&plat1);
     objects.push_back(&plat2);
+    objects.push_back(&plat3);
+
     objects.push_back(&sidePlat1);
     objects.push_back(&sidePlat2);
+
     objects.push_back(&coin1);
     objects.push_back(&coin2);
+    objects.push_back(&coin3);
+    objects.push_back(&coin4);
+    objects.push_back(&coin5);
+    objects.push_back(&coin6);
+    objects.push_back(&coin7);
+    objects.push_back(&coin8);
+    objects.push_back(&coin9);
+    objects.push_back(&coin10);
+    objects.push_back(&coin11);
+    objects.push_back(&coin12);
+
     objects.push_back(&xMovPlat1);
     objects.push_back(&xMovPlat2);
+    objects.push_back(&xMovPlat3);
+
     objects.push_back(&tempPlat1);
+
+    objects.push_back(&yMovPlat1);
+    objects.push_back(&yMovPlat2);
 
     resetCourse();
 }
