@@ -85,6 +85,8 @@ void resetCourse()
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
 
+    wind = false;
+
     glutIgnoreKeyRepeat(1);
 
     //Reset game objects
@@ -284,11 +286,6 @@ void animate(int value)
         ball.currVel.z = -MAX_VEL;
     }
 
-    /*
-    if (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL)
-    {
-        ball.currVel.y = 0;
-    }*/
     //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
 
 
@@ -351,12 +348,12 @@ void keyboard(unsigned char key, int x, int y)
     {
         if (!wind)
         {
-            xWind = -20;
+            ball.acc.x = WIND_X_VAL;
             wind = true;
         }
         else
         {
-            xWind = 0;
+            ball.acc.x = 0;
             wind = false;
         }
     }

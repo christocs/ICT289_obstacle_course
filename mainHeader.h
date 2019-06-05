@@ -40,8 +40,7 @@
 //Maximum velocity of the ball in any direction
 #define MAX_VEL 99999
 
-//The velocity deemed to be unnecessary jitter in the Y direction
-#define Y_JITTER_VEL 0.0000001
+#define WIND_X_VAL 20
 
 //Camera values
 #define FOV 60
@@ -77,7 +76,6 @@ bool jumpPress;
 int jumpH = 1100;
 bool moonJumpTrue = false;
 
-int xWind = 0;
 bool wind = false;
 
 //Game objects initialisation
