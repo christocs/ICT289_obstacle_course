@@ -1,6 +1,8 @@
 #ifndef BASIC_PLATFORM_H
 #define BASIC_PLATFORM_H
 
+#include "Object.h"
+
 #include "XAlignedPlane.h"
 #include "YAlignedPlane.h"
 #include "ZAlignedPlane.h"
@@ -13,12 +15,12 @@
 #define COLOUR2_G 0.62352
 #define COLOUR2_B 0.4
 
-class BasicPlatform
+class BasicPlatform: public Object
 {
 public:
     BasicPlatform() = delete;
 
-    BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax);
+    BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce);
 
     void display();
 
@@ -26,10 +28,12 @@ public:
 
     bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius);
 
-private:
-    XAlignedPlane xPlane;
+    bool touchingFloor(const point3D& vel, const point3D& prevPos, float radius);
 
-    YAlignedPlane yPlane1, yPlane2;
+private:
+    XAlignedPlane xPlane1, xPlane2;
+
+    YAlignedPlane yPlane;
 
     ZAlignedPlane zPlane1, zPlane2;
 };

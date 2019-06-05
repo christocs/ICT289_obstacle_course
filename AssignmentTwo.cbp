@@ -34,6 +34,8 @@
 		</Compiler>
 		<Unit filename="AxisAlignedPlane.cpp" />
 		<Unit filename="AxisAlignedPlane.h" />
+		<Unit filename="BasicPlatform.cpp" />
+		<Unit filename="BasicPlatform.h" />
 		<Unit filename="Module.cpp" />
 		<Unit filename="Module.h" />
 		<Unit filename="Object.h" />
@@ -54,7 +56,6 @@
 		<Unit filename="moduleOneTest.h" />
 		<Unit filename="plainModule.cpp" />
 		<Unit filename="point3D.h" />
-		<Unit filename="rectangleCorners.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

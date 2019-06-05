@@ -53,3 +53,30 @@ bool YAlignedPlane::collisionDetected(const point3D& vel, const point3D& prevPos
 
     return detected;
 }
+
+bool YAlignedPlane::touchingFloor(const point3D& vel, const point3D& prevPos, float radius)
+{
+    bool detected = false;
+    point3D newPos = prevPos;
+    newPos.x += vel.x;
+    newPos.y += vel.y;
+    newPos.z += vel.z;
+
+    //Check if main axis aligns (generous check if the ball isn't going under the plane)
+    if (newPos.y <= mainAxis + radius && newPos.y >= mainAxis - (radius / 2.0) )
+    {
+        //Check if secondary axis aligns (generous, allows ball to be half the ball's radius out)
+        if ((newPos.x + radius / 2.0) <= std::max(axis2Min, axis2Max) &&
+                (newPos.x - radius / 2.0) >= std::min(axis2Min, axis2Max) )
+        {
+            //Check if third axis aligns (generous, allows ball to be half the ball's radius out)
+            if ((newPos.z + radius / 2.0) <= std::max(axis3Min, axis3Max) &&
+                    (newPos.z - radius / 2.0) >= std::min(axis3Min, axis3Max) )
+            {
+                detected = true;
+            }
+        }
+    }
+
+    return detected;
+}

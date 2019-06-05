@@ -37,7 +37,7 @@ public:
     void setAxis3MaxVal(double axis3MaxVal) {axis3Max = axis3MaxVal;}
 
     ///Can only be 0 or above
-    void SetBounceCoefficient(float bounceCo);
+    void setBounceCoefficient(float bounceCo);
 
     void setColour(const colour& cl) {colour = cl;}
 

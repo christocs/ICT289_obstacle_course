@@ -1,6 +1,8 @@
 #ifndef Object_H
 #define Object_H
 
+#include "point3D.h"
+
 class Object
 {
 public:
