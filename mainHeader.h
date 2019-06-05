@@ -74,9 +74,11 @@ bool moonJumpTrue = false;
 int xWind = 0;
 bool wind = false;
 
-//Pointer to game objects
-std::vector<Object*> objects;
+BasicPlatform startPlatform(-500, 500, -100, -100, 1000, 500, DEFAULT_BOUNCE, DEFAULT_BOUNCE);
 
-BasicPlatform startPlatform(-500, 500, -100, -100, 1000, 50, DEFAULT_BOUNCE, DEFAULT_BOUNCE);
+//Pointers to game objects
+Object* objects[] = {&startPlatform};
+
+int objectsSize = 1;
 
 #endif // MAINHEADER_H

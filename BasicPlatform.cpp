@@ -1,4 +1,5 @@
 #include "BasicPlatform.h"
+#include <iostream>
 
 BasicPlatform::BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce)
 {
@@ -66,7 +67,7 @@ void BasicPlatform::display()
     zPlane2.display();
 }
 
-point3D& BasicPlatform::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
+point3D BasicPlatform::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
 {
     int collisions = 0;
     //Average velocity from collisions
@@ -100,6 +101,8 @@ point3D& BasicPlatform::getBallVel(const point3D& vel, const point3D& prevPos, f
 
     if (yPlane.collisionDetected(vel, prevPos, radius))
     {
+        std::cout << vel.y << "   323232323" << std::endl;
+
         tempVel = yPlane.getBallVel(vel, prevPos, radius);
         colVel.x += tempVel.x;
         colVel.y += tempVel.y;

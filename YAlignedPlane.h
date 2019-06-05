@@ -9,7 +9,7 @@ public:
     void display();
 
     /** Only approximate collision. Does not test edges. Very generous with collisions. */
-    point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius);
+    point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius);
 
     /** Only approximate collision. Does not test edges. Very generous with collisions. */
     bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius);

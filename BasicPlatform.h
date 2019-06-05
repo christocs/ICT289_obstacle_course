@@ -24,7 +24,7 @@ public:
 
     void display();
 
-    point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius);
+    point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius);
 
     bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius);
 

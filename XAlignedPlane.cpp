@@ -15,7 +15,7 @@ void XAlignedPlane::display()
     glEnd();
 }
 
-point3D& XAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
+point3D XAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
 {
     point3D newVel = vel;
     //Inverts velocity and applies bounce coefficient, if collision detected

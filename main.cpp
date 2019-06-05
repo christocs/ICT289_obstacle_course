@@ -34,8 +34,6 @@ void init()
 
     glutSetKeyRepeat(0);
 
-    objects.push_back(&startPlatform);
-
     resetCourse();
 }
 
@@ -88,9 +86,9 @@ void resetCourse()
     glutIgnoreKeyRepeat(1);
 
     //Reset game objects
-    for (unsigned i = 0; i < objects.size(); i++)
+    for (unsigned i = 0; i < objectsSize; i++)
     {
-        objects.at(i)->reset();
+        objects[i]->reset();
     }
 }
 
@@ -108,9 +106,9 @@ void display()
     drawBall();
 
     //Display game objects
-    for (unsigned i = 0; i < objects.size(); i++)
+    for (unsigned i = 0; i < objectsSize; i++)
     {
-        objects.at(i)->display();
+        objects[i]->display();
     }
 
     glutSwapBuffers();
@@ -135,6 +133,12 @@ void animate(int value)
 
     glutKeyboardFunc(keyboard);
     glutKeyboardUpFunc(noKeyboard);
+
+    //Animate game objects
+    for (unsigned i = 0; i < objectsSize; i++)
+    {
+        objects[i]->animate();
+    }
 
     ball.currTime = glutGet(GLUT_ELAPSED_TIME);
     deltaT_seconds = ball.currTime - ball.prevTime;
@@ -176,10 +180,10 @@ void animate(int value)
         ball.jumpAcc = 0;
     }
 
-   /* else if  (ball.prevPos.y > 120 && ball.prevPos.y  < jumpH)
-    {
-        ball.currVel.y -= 0.1;
-    }*/
+    /* else if  (ball.prevPos.y > 120 && ball.prevPos.y  < jumpH)
+     {
+         ball.currVel.y -= 0.1;
+     }*/
 
     else if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 )
     {
@@ -212,6 +216,55 @@ void animate(int value)
         ball.rotation.x = 0;
     }
 
+    /* Determine altered velocity from collisions */
+    int collisions = 0;
+
+    //Average velocity from collisions
+    point3D colVel;
+    colVel.x = 0;
+    colVel.y = 0;
+    colVel.z = 0;
+    //Temporary velocity store for processing
+    point3D tempVel;
+
+    /*
+    for (unsigned i = 0; i < objectsSize; i++)
+    {
+        if (objects[i]->collisionDetected(ball.currVel, ball.prevPos, ball.radius))
+        {
+            tempVel = objects[i]->getBallVel(ball.currVel, ball.prevPos, ball.radius);
+            colVel.x += tempVel.x;
+            colVel.y += tempVel.y;
+            colVel.z += tempVel.z;
+
+            collisions++;
+        }
+    }*/
+
+    if (startPlatform.collisionDetected(ball.currVel, ball.prevPos, ball.radius))
+    {
+        tempVel = startPlatform.getBallVel(ball.currVel, ball.prevPos, ball.radius);
+        colVel.x += tempVel.x;
+        colVel.y += tempVel.y;
+        colVel.z += tempVel.z;
+
+        collisions++;
+    }
+
+    //Calc average velocity of collisions and change velocity of ball if collisions happened
+    if (collisions > 0)
+    {
+        //Determine average
+        colVel.x /= (float) collisions;
+        colVel.y /= (float) collisions;
+        colVel.z /= (float) collisions;
+
+        //Modify velocity
+        ball.currVel.x = colVel.x;
+        ball.currVel.y = colVel.y;
+        ball.currVel.z = colVel.z;
+    }
+
     ball.currPos.x = ball.prevPos.x + ball.currVel.x;
     ball.currPos.y = ball.prevPos.y + ball.currVel.y;
     ball.currPos.z = ball.prevPos.z + ball.currVel.z;
@@ -221,12 +274,6 @@ void animate(int value)
     ball.prevTime = ball.currTime;
 
     std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
-
-   //Animate game objects
-    for (unsigned i = 0; i < objects.size(); i++)
-    {
-        objects.at(i)->animate();
-    }
 
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
@@ -297,9 +344,9 @@ void keyboard(unsigned char key, int x, int y)
     {
         if (ball.prevPos.y >= 80 && ball.prevPos.y <= 120 && jumpPress == false)
         {
-              ball.moveDir.posY = true;
+            ball.moveDir.posY = true;
 
-              jumpPress = false;
+            jumpPress = false;
         }
     }
 }

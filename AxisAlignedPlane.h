@@ -24,7 +24,7 @@ public:
 
     float getBounceCoefficient() const {return bounceCoefficient;}
 
-    const colour& getColour() const {return colour;}
+    const colour getColour() const {return colour;}
 
     void setMainAxisValue(double mainAxisVal) {mainAxis = mainAxisVal;}
 
@@ -44,7 +44,7 @@ public:
     /**
      * calculates what the velocity of the ball should be, based on the ball's current velocity and position
      */
-    virtual point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius) = 0;
+    virtual point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius) = 0;
 
     virtual bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius) = 0;
 
