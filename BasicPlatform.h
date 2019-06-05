@@ -20,6 +20,10 @@ class BasicPlatform: public Object
 public:
     BasicPlatform() = delete;
 
+    void animate(const point3D& currPos, float radius) {}
+
+    void reset() {}
+
     BasicPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce);
 
     void display();

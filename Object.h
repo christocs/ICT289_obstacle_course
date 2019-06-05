@@ -6,7 +6,7 @@
 class Object
 {
 public:
-    void animate() {}
+    virtual void animate(const point3D& currPos, float radius) = 0;
 
     virtual void display() = 0;
 
@@ -16,6 +16,6 @@ public:
 
     virtual bool touchingFloor(const point3D& currPos, float radius) = 0;
 
-    void reset() {}
+    virtual void reset() = 0;
 };
 #endif

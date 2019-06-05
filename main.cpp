@@ -41,6 +41,7 @@ void init()
     objects.push_back(&plat1);
     objects.push_back(&plat2);
     objects.push_back(&sidePlat1);
+    objects.push_back(&coin1);
 
     resetCourse();
 }
@@ -150,7 +151,7 @@ void animate(int value)
     //Animate game objects
     for (unsigned i = 0; i < objects.size(); i++)
     {
-        objects[i]->animate();
+        objects[i]->animate(ball.currPos, ball.radius);
     }
 
     ball.currTime = glutGet(GLUT_ELAPSED_TIME);
@@ -300,7 +301,7 @@ void animate(int value)
     ball.prevTime = ball.currTime;
 
     //std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
-    std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
+    //std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
         resetCourse();
