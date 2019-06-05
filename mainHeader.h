@@ -1,7 +1,8 @@
 #ifndef MAINHEADER_H
 #define MAINHEADER_H
 
-#include <freeglut.h>
+//#include <freeglut.h>
+#include <GL/freeglut.h>
 #include "Module.h"
 #include "ball.h"
 #include "moduleOneTest.h"
@@ -10,6 +11,7 @@
 #define TIMERMSECS 9
 
 #define PROGRAM_NAME "Obstacle Course"
+
 
 //Contains information about the ball
 ball ball;
@@ -25,6 +27,28 @@ float deltaT_seconds;
 
 //Contains all modules in the course
 //Module modules[];
+
+//  start rory's new defs
+#define   HEIGHT	320
+#define   WIDTH 	240
+FILE *cFile, *kFile, *rFile;
+typedef 	unsigned char	pixel;
+pixel	imageBuffer[HEIGHT*WIDTH];
+pixel	imageBufferC[HEIGHT*WIDTH];
+pixel	imageBufferK[HEIGHT*WIDTH];
+pixel	imageBufferR[HEIGHT*WIDTH];
+pixel 	imageR[HEIGHT][WIDTH];
+pixel 	imageC[HEIGHT][WIDTH];
+pixel 	imageK[HEIGHT][WIDTH];
+int charin, row, column;
+int cCharIn,rCharIn,kCharIn;
+bool stop=false;
+
+void loadImage();
+void dispImages();
+void exitProg(int x);
+//  end new defs
+
 
 void init();
 void resetCourse();
