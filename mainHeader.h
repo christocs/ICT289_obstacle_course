@@ -10,7 +10,7 @@
 #include "BasicPlatform.h"
 
 //The time in milliseconds between timer ticks
-#define TIMERMSECS 2
+#define TIMERMSECS 11
 //The minimum y-coordinate the ball's centre can be at before the course resets
 #define MINIMUM_Y_VALUE_RESET_ZONE -2500
 //Name of the program to be displayed
@@ -35,13 +35,13 @@
 #define DEFAULT_B 0
 
 //Default bounce coefficient
-#define DEFAULT_BOUNCE 2
+#define DEFAULT_BOUNCE 0.8
 
 //Maximum velocity of the ball in any direction
 #define MAX_VEL 99999
 
-//The velocity deemed to be unnecessary jitter
-#define JITTER_VEL 0.5
+//The velocity deemed to be unnecessary jitter in the Y direction
+#define Y_JITTER_VEL 0.0000001
 
 //Camera values
 #define FOV 60

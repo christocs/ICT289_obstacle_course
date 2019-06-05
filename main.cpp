@@ -234,10 +234,10 @@ void animate(int value)
         if (objects[i]->collisionDetected(ball.currVel, ball.prevPos, ball.radius))
         {
             tempVel = objects[i]->getBallVel(ball.currVel, ball.prevPos, ball.radius);
+
             colVel.x += tempVel.x;
             colVel.y += tempVel.y;
             colVel.z += tempVel.z;
-
             collisions++;
         }
     }
@@ -284,11 +284,12 @@ void animate(int value)
         ball.currVel.z = -MAX_VEL;
     }
 
+    /*
     if (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL)
     {
         ball.currVel.y = 0;
-    }
-    std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
+    }*/
+    //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
 
 
     ball.currPos.x = ball.prevPos.x + ball.currVel.x;
