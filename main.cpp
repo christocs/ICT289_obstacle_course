@@ -196,30 +196,6 @@ void animate(int value)
 
     addWindResistance(ball.currVel);
 
-    float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
-
-    //If ball moving in x direction, rotate
-    if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
-    {
-        ball.rotation.y = millisecondsPassed;
-        ball.rotationAngle =  ball.rotationAngle + 6 * millisecondsPassed;
-    }
-    else
-    {
-        ball.rotation.z = 0;
-    }
-
-    //If ball moving z direction, rotate
-    if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
-    {
-        ball.rotation.x = millisecondsPassed;
-        ball.rotationAngle =  ball.rotationAngle + 6 * millisecondsPassed;
-    }
-    else
-    {
-        ball.rotation.x = 0;
-    }
-
     /* Determine altered velocity from collisions */
     int collisions = 0;
 
@@ -287,6 +263,30 @@ void animate(int value)
     }
 
     //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
+
+    float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
+
+    //If ball moving in x direction, rotate
+    if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
+    {
+        ball.rotation.y = 1;
+        ball.rotationAngle =  ball.rotationAngle + ball.currVel.x * millisecondsPassed;
+    }
+    else
+    {
+        ball.rotation.z = 0;
+    }
+
+    //If ball moving z direction, rotate
+    if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
+    {
+        ball.rotation.x = 1;
+        ball.rotationAngle =  ball.rotationAngle + ball.currVel.z * millisecondsPassed;
+    }
+    else
+    {
+        ball.rotation.x = 0;
+    }
 
 
     ball.currPos.x = ball.prevPos.x + ball.currVel.x;
