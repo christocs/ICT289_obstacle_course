@@ -4,14 +4,12 @@
 class Object
 {
 public:
-    Object();
+    void animate() {}
 
-    void animate();
+    virtual void display() = 0;
 
-    void display();
+    virtual point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius) = 0;
 
-    point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta);
-
-    bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta);
+    virtual bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius) = 0;
 };
 #endif

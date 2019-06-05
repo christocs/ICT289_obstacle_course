@@ -7,7 +7,7 @@
 class AxisAlignedPlane
 {
 public:
-    AxisAlignedPlane(){};
+    AxisAlignedPlane() {}
 
     AxisAlignedPlane(double mainAxisValue, double axis2MinVal, double axis2MaxVal, double axis3MinVal, double axis3MaxVal, double bounceCo, const colour& cl):
     mainAxis(mainAxisValue), axis2Min(axis2MinVal), axis2Max(axis2MaxVal), axis3Min(axis3MinVal), axis3Max(axis3MaxVal), bounceCoefficient(bounceCo), colour(cl) {}
@@ -44,7 +44,9 @@ public:
     /**
      * calculates what the velocity of the ball should be, based on the ball's current velocity and position
      */
-    virtual point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta) = 0;
+    virtual point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius) = 0;
+
+    virtual bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius) = 0;
 
     virtual void display() = 0;
 

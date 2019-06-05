@@ -1,6 +1,8 @@
 #include "YAlignedPlane.h"
 #include <GL/freeglut.h>
 
+#include <algorithm>
+
 void YAlignedPlane::display()
 {
     glColor3f(colour.r, colour.g, colour.b);
@@ -13,16 +15,41 @@ void YAlignedPlane::display()
     glEnd();
 }
 
-point3D YAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta)
+point3D& YAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, float radius)
 {
     point3D newVel = vel;
-
-    //Checks if the ball's tip hits the main part of the plane
-    if (prevPos.y >= mainAxis - radius && prevPos.y <= mainAxis + radius)
+    //Inverts velocity and applies bounce coefficient, if collision detected
+    if (collisionDetected(vel, prevPos, radius))
     {
         newVel.y = -(bounceCoefficient * vel.y);
-    } //else if (do edge detection here)
-    //Checks if the ball hits the edge of the plane
+    }
 
     return newVel;
+}
+
+bool YAlignedPlane::collisionDetected(const point3D& vel, const point3D& prevPos, float radius)
+{
+    bool detected = false;
+    point3D newPos = prevPos;
+    newPos.x += vel.x;
+    newPos.y += vel.y;
+    newPos.z += vel.z;
+
+    //Check if main axis aligns
+    if (newPos.y <= mainAxis + radius && newPos.y >= mainAxis - radius)
+    {
+        //Check if secondary axis aligns (generous, allows ball to be half the ball's radius out)
+        if ((newPos.x + radius / 2.0) <= std::max(axis2Min, axis2Max) &&
+                (newPos.x - radius / 2.0) >= std::min(axis2Min, axis2Max) )
+        {
+            //Check if third axis aligns (generous, allows ball to be half the ball's radius out)
+            if ((newPos.z + radius / 2.0) <= std::max(axis3Min, axis3Max) &&
+                    (newPos.z - radius / 2.0) >= std::min(axis3Min, axis3Max) )
+            {
+                detected = true;
+            }
+        }
+    }
+
+    return detected;
 }

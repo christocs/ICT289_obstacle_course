@@ -8,7 +8,11 @@ class ZAlignedPlane: public AxisAlignedPlane
 public:
     void display();
 
-    point3D getBallVel(const point3D& vel, const point3D& prevPos, float radius, float secondsDelta);
+    /** Only approximate collision. Does not test edges. Just increases size of surface by half of radius for collisions. */
+    point3D& getBallVel(const point3D& vel, const point3D& prevPos, float radius);
+
+    /** Only approximate collision. Does not test edges. */
+    bool collisionDetected(const point3D& vel, const point3D& prevPos, float radius);
 };
 
 #endif
