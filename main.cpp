@@ -34,6 +34,8 @@ void init()
 
     glutSetKeyRepeat(0);
 
+    objects.push_back(&startPlatform);
+
     resetCourse();
 }
 
@@ -86,7 +88,7 @@ void resetCourse()
     glutIgnoreKeyRepeat(1);
 
     //Reset game objects
-    for (unsigned i = 0; i < objectsSize; i++)
+    for (unsigned i = 0; i < objects.size(); i++)
     {
         objects[i]->reset();
     }
@@ -106,7 +108,7 @@ void display()
     drawBall();
 
     //Display game objects
-    for (unsigned i = 0; i < objectsSize; i++)
+    for (unsigned i = 0; i < objects.size(); i++)
     {
         objects[i]->display();
     }
@@ -135,7 +137,7 @@ void animate(int value)
     glutKeyboardUpFunc(noKeyboard);
 
     //Animate game objects
-    for (unsigned i = 0; i < objectsSize; i++)
+    for (unsigned i = 0; i < objects.size(); i++)
     {
         objects[i]->animate();
     }
@@ -227,8 +229,7 @@ void animate(int value)
     //Temporary velocity store for processing
     point3D tempVel;
 
-    /*
-    for (unsigned i = 0; i < objectsSize; i++)
+    for (unsigned i = 0; i < objects.size(); i++)
     {
         if (objects[i]->collisionDetected(ball.currVel, ball.prevPos, ball.radius))
         {
@@ -239,16 +240,6 @@ void animate(int value)
 
             collisions++;
         }
-    }*/
-
-    if (startPlatform.collisionDetected(ball.currVel, ball.prevPos, ball.radius))
-    {
-        tempVel = startPlatform.getBallVel(ball.currVel, ball.prevPos, ball.radius);
-        colVel.x += tempVel.x;
-        colVel.y += tempVel.y;
-        colVel.z += tempVel.z;
-
-        collisions++;
     }
 
     //Calc average velocity of collisions and change velocity of ball if collisions happened
@@ -265,6 +256,41 @@ void animate(int value)
         ball.currVel.z = colVel.z;
     }
 
+    /* ensure velocity never reaches over a maximum */
+    if (ball.currVel.x > MAX_VEL)
+    {
+        ball.currVel.x = MAX_VEL;
+    }
+    else if (ball.currVel.x < -MAX_VEL)
+    {
+        ball.currVel.x = -MAX_VEL;
+    }
+
+    if (ball.currVel.y > MAX_VEL)
+    {
+        ball.currVel.y = MAX_VEL;
+    }
+    else if (ball.currVel.y < -MAX_VEL)
+    {
+        ball.currVel.y = -MAX_VEL;
+    }
+
+    if (ball.currVel.z > MAX_VEL)
+    {
+        ball.currVel.z = MAX_VEL;
+    }
+    else if (ball.currVel.z < -MAX_VEL)
+    {
+        ball.currVel.z = -MAX_VEL;
+    }
+
+    if (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL)
+    {
+        ball.currVel.y = 0;
+    }
+    std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
+
+
     ball.currPos.x = ball.prevPos.x + ball.currVel.x;
     ball.currPos.y = ball.prevPos.y + ball.currVel.y;
     ball.currPos.z = ball.prevPos.z + ball.currVel.z;
@@ -273,7 +299,7 @@ void animate(int value)
     ball.prevPos = ball.currPos;
     ball.prevTime = ball.currTime;
 
-    std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
+    std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
 
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)

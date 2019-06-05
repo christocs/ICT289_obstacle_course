@@ -35,7 +35,13 @@
 #define DEFAULT_B 0
 
 //Default bounce coefficient
-#define DEFAULT_BOUNCE 0.8
+#define DEFAULT_BOUNCE 2
+
+//Maximum velocity of the ball in any direction
+#define MAX_VEL 99999
+
+//The velocity deemed to be unnecessary jitter
+#define JITTER_VEL 0.5
 
 //Camera values
 #define FOV 60
@@ -74,11 +80,10 @@ bool moonJumpTrue = false;
 int xWind = 0;
 bool wind = false;
 
+//Game objects initialisation
 BasicPlatform startPlatform(-500, 500, -100, -100, 1000, 500, DEFAULT_BOUNCE, DEFAULT_BOUNCE);
 
 //Pointers to game objects
-Object* objects[] = {&startPlatform};
-
-int objectsSize = 1;
+std::vector<Object*> objects;
 
 #endif // MAINHEADER_H

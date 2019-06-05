@@ -101,8 +101,6 @@ point3D BasicPlatform::getBallVel(const point3D& vel, const point3D& prevPos, fl
 
     if (yPlane.collisionDetected(vel, prevPos, radius))
     {
-        std::cout << vel.y << "   323232323" << std::endl;
-
         tempVel = yPlane.getBallVel(vel, prevPos, radius);
         colVel.x += tempVel.x;
         colVel.y += tempVel.y;
