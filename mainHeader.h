@@ -27,6 +27,10 @@
 //Default jump acceleration
 #define DEFAULT_JUMP_ACC 10
 
+#define MOVE_ACC 5
+
+#define MAX_MOVE_SPEED 10
+
 //Colour values
 #define BALL_R 0
 #define BALL_G 0

@@ -118,11 +118,10 @@ void resetCourse()
     windResistance = 0.35;
 
     //Set default move acceleration along an x-z plane
-    ball.moveAcc = 5;
-    ball.moveAcc = 0.2;
+    ball.moveAcc = MOVE_ACC;
 
     //Maximum speed the ball can reach from only pressing move keys
-    ball.maxMoveSpeed = 10;
+    ball.maxMoveSpeed = MAX_MOVE_SPEED;
 
     //Set default jump acceleration
     ball.jumpAcc = DEFAULT_JUMP_ACC;
@@ -362,13 +361,12 @@ void animate(int value)
     ball.prevTime = ball.currTime;
         // Calling post redisplay calls the display again and so we don't need to draw the ball in here else it will be drawn twice
         glutPostRedisplay();
-    }
 
-    //std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
-    //std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
         resetCourse();
+
+    }
 }
 
 
