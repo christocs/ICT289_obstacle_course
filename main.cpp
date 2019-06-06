@@ -28,21 +28,26 @@ int main(int arc, char** argv)
     glutMainLoop();
 }
 
-void loadImage(void){
+void loadImage(void)
+{
 
     if ( (cFile=fopen("christo.raw","rb"))==NULL ||
-         (kFile=fopen("kye.raw","rb"))==NULL ||
-         (rFile=fopen("rory.raw","rb"))==NULL  ){
+            (kFile=fopen("kye.raw","rb"))==NULL ||
+            (rFile=fopen("rory.raw","rb"))==NULL  )
+    {
         printf("\nError opening image, exiting...");
         exit(1);
     }
 
-    for (row = 0; row < I_HEIGHT; row++){
-        for(column=0; column<I_WIDTH;column++){
+    for (row = 0; row < I_HEIGHT; row++)
+    {
+        for(column=0; column<I_WIDTH; column++)
+        {
 
             if( (cCharIn=fgetc(cFile))==EOF ||
-                (kCharIn=fgetc(kFile))==EOF ||
-                (rCharIn=fgetc(rFile))==EOF ){
+                    (kCharIn=fgetc(kFile))==EOF ||
+                    (rCharIn=fgetc(rFile))==EOF )
+            {
 
                 printf("\nError reading image, exiting...");
                 exit(1);
@@ -202,169 +207,170 @@ void drawBall()
 
 void animate(int value)
 {
-    if(!stop){
+    if(!stop)
+    {
         glutTimerFunc(TIMERMSECS,animate,0);
 
-    glutKeyboardFunc(keyboard);
-    glutKeyboardUpFunc(noKeyboard);
+        glutKeyboardFunc(keyboard);
+        glutKeyboardUpFunc(noKeyboard);
 
-    ball.currTime = glutGet(GLUT_ELAPSED_TIME);
-    deltaT_seconds = ball.currTime - ball.prevTime;
+        ball.currTime = glutGet(GLUT_ELAPSED_TIME);
+        deltaT_seconds = ball.currTime - ball.prevTime;
 
-    //Animate game objects
-    for (unsigned i = 0; i < objects.size(); i++)
-    {
-        objects[i]->animate(ball.currPos, ball.radius, deltaT_seconds);
-    }
-
-    //Apply ball acceleratino to velocity
-    ball.currVel.x = ball.prevVel.x;
-    ball.currVel.x += ball.acc.x * deltaT_seconds;
-    ball.currVel.y = ball.prevVel.y;
-    ball.currVel.y += ball.acc.y * deltaT_seconds;
-    ball.currVel.z = ball.prevVel.z;
-    ball.currVel.z += ball.acc.z * deltaT_seconds;
-
-    //add x and z-plane acceleration onto velocity when keys pressed
-    if (ball.moveDir.posX == true && ball.currVel.x < ball.maxMoveSpeed)
-    {
-        ball.currVel.x += ball.moveAcc * deltaT_seconds;
-    }
-    if (ball.moveDir.negX == true && ball.currVel.x > -ball.maxMoveSpeed)
-    {
-        ball.currVel.x -= ball.moveAcc * deltaT_seconds;
-    }
-    if (ball.moveDir.posZ == true && ball.currVel.z < ball.maxMoveSpeed)
-    {
-        ball.currVel.z += ball.moveAcc * deltaT_seconds ;
-    }
-    if (ball.moveDir.negZ == true && ball.currVel.z > -ball.maxMoveSpeed)
-    {
-        ball.currVel.z -= ball.moveAcc * deltaT_seconds;
-    }
-
-    //add jump acceleration upon valid jumps, which is the spacebar has been held down since touching the ground and max height isn't reached
-    if (ball.moveDir.posY == true && (ball.currPos.y < ball.jumpStartH + ball.jumpH))
-    {
-        ball.currVel.y += ball.jumpAcc * deltaT_seconds;
-    }
-    else
-    {
-        ball.moveDir.posY = false;
-    }
-
-    addWindResistance(ball.currVel);
-
-    /* Determine altered velocity from collisions */
-    int collisions = 0;
-
-    //Average velocity from collisions
-    point3D colVel;
-    colVel.x = 0;
-    colVel.y = 0;
-    colVel.z = 0;
-    //Temporary velocity store for processing
-    point3D tempVel;
-
-    for (unsigned i = 0; i < objects.size(); i++)
-    {
-        if (objects[i]->collisionDetected(ball.currVel, ball.prevPos, ball.radius))
+        //Animate game objects
+        for (unsigned i = 0; i < objects.size(); i++)
         {
-            tempVel = objects[i]->getBallVel(ball.currVel, ball.prevPos, ball.radius);
-
-            colVel.x += tempVel.x;
-            colVel.y += tempVel.y;
-            colVel.z += tempVel.z;
-            collisions++;
+            objects[i]->animate(ball.currPos, ball.radius, deltaT_seconds);
         }
-    }
 
-    //Calc average velocity of collisions and change velocity of ball if collisions happened
-    if (collisions > 0)
-    {
-        //Determine average
-        colVel.x /= (float) collisions;
-        colVel.y /= (float) collisions;
-        colVel.z /= (float) collisions;
+        //Apply ball acceleratino to velocity
+        ball.currVel.x = ball.prevVel.x;
+        ball.currVel.x += ball.acc.x * deltaT_seconds;
+        ball.currVel.y = ball.prevVel.y;
+        ball.currVel.y += ball.acc.y * deltaT_seconds;
+        ball.currVel.z = ball.prevVel.z;
+        ball.currVel.z += ball.acc.z * deltaT_seconds;
 
-        //Modify velocity
-        ball.currVel.x = colVel.x;
-        ball.currVel.y = colVel.y;
-        ball.currVel.z = colVel.z;
-    }
+        //add x and z-plane acceleration onto velocity when keys pressed
+        if (ball.moveDir.posX == true && ball.currVel.x < ball.maxMoveSpeed)
+        {
+            ball.currVel.x += ball.moveAcc * deltaT_seconds;
+        }
+        if (ball.moveDir.negX == true && ball.currVel.x > -ball.maxMoveSpeed)
+        {
+            ball.currVel.x -= ball.moveAcc * deltaT_seconds;
+        }
+        if (ball.moveDir.posZ == true && ball.currVel.z < ball.maxMoveSpeed)
+        {
+            ball.currVel.z += ball.moveAcc * deltaT_seconds ;
+        }
+        if (ball.moveDir.negZ == true && ball.currVel.z > -ball.maxMoveSpeed)
+        {
+            ball.currVel.z -= ball.moveAcc * deltaT_seconds;
+        }
 
-    /* ensure velocity never reaches over a maximum */
-    if (ball.currVel.x > MAX_VEL)
-    {
-        ball.currVel.x = MAX_VEL;
-    }
-    else if (ball.currVel.x < -MAX_VEL)
-    {
-        ball.currVel.x = -MAX_VEL;
-    }
+        //add jump acceleration upon valid jumps, which is the spacebar has been held down since touching the ground and max height isn't reached
+        if (ball.moveDir.posY == true && (ball.currPos.y < ball.jumpStartH + ball.jumpH))
+        {
+            ball.currVel.y += ball.jumpAcc * deltaT_seconds;
+        }
+        else
+        {
+            ball.moveDir.posY = false;
+        }
 
-    if (ball.currVel.y > MAX_VEL)
-    {
-        ball.currVel.y = MAX_VEL;
-    }
-    else if (ball.currVel.y < -MAX_VEL)
-    {
-        ball.currVel.y = -MAX_VEL;
-    }
+        addWindResistance(ball.currVel);
 
-    if (ball.currVel.z > MAX_VEL)
-    {
-        ball.currVel.z = MAX_VEL;
-    }
-    else if (ball.currVel.z < -MAX_VEL)
-    {
-        ball.currVel.z = -MAX_VEL;
-    }
+        /* Determine altered velocity from collisions */
+        int collisions = 0;
 
-    //Remove y-axis jitter
-    if (ball.currVel.y < Y_JITTER && ball.currVel.y > -Y_JITTER)
-        ball.currVel.y = 0;
+        //Average velocity from collisions
+        point3D colVel;
+        colVel.x = 0;
+        colVel.y = 0;
+        colVel.z = 0;
+        //Temporary velocity store for processing
+        point3D tempVel;
 
-    //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
+        for (unsigned i = 0; i < objects.size(); i++)
+        {
+            if (objects[i]->collisionDetected(ball.currVel, ball.prevPos, ball.radius))
+            {
+                tempVel = objects[i]->getBallVel(ball.currVel, ball.prevPos, ball.radius);
 
-    float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
+                colVel.x += tempVel.x;
+                colVel.y += tempVel.y;
+                colVel.z += tempVel.z;
+                collisions++;
+            }
+        }
 
-    //If ball moving in x direction, rotate
-    if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
-    {
-        ball.rotation.y = 1;
-        ball.rotationAngle =  ball.rotationAngle + ball.currVel.x * millisecondsPassed;
-    }
-    else
-    {
-        ball.rotation.z = 0;
-    }
+        //Calc average velocity of collisions and change velocity of ball if collisions happened
+        if (collisions > 0)
+        {
+            //Determine average
+            colVel.x /= (float) collisions;
+            colVel.y /= (float) collisions;
+            colVel.z /= (float) collisions;
 
-    //If ball moving z direction, rotate
-    if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
-    {
-        ball.rotation.x = 1;
-        ball.rotationAngle =  ball.rotationAngle + ball.currVel.z * millisecondsPassed;
-    }
-    else
-    {
-        ball.rotation.x = 0;
-    }
+            //Modify velocity
+            ball.currVel.x = colVel.x;
+            ball.currVel.y = colVel.y;
+            ball.currVel.z = colVel.z;
+        }
+
+        /* ensure velocity never reaches over a maximum */
+        if (ball.currVel.x > MAX_VEL)
+        {
+            ball.currVel.x = MAX_VEL;
+        }
+        else if (ball.currVel.x < -MAX_VEL)
+        {
+            ball.currVel.x = -MAX_VEL;
+        }
+
+        if (ball.currVel.y > MAX_VEL)
+        {
+            ball.currVel.y = MAX_VEL;
+        }
+        else if (ball.currVel.y < -MAX_VEL)
+        {
+            ball.currVel.y = -MAX_VEL;
+        }
+
+        if (ball.currVel.z > MAX_VEL)
+        {
+            ball.currVel.z = MAX_VEL;
+        }
+        else if (ball.currVel.z < -MAX_VEL)
+        {
+            ball.currVel.z = -MAX_VEL;
+        }
+
+        //Remove y-axis jitter
+        if (ball.currVel.y < Y_JITTER && ball.currVel.y > -Y_JITTER)
+            ball.currVel.y = 0;
+
+        //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
+
+        float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
+
+        //If ball moving in x direction, rotate
+        if (ball.currVel.x > 0.1 || ball.currVel.x < -0.1 )
+        {
+            ball.rotation.y = 1;
+            ball.rotationAngle =  ball.rotationAngle + ball.currVel.x * millisecondsPassed;
+        }
+        else
+        {
+            ball.rotation.z = 0;
+        }
+
+        //If ball moving z direction, rotate
+        if (ball.currVel.z > 0.1 || ball.currVel.z < -0.1 )
+        {
+            ball.rotation.x = 1;
+            ball.rotationAngle =  ball.rotationAngle + ball.currVel.z * millisecondsPassed;
+        }
+        else
+        {
+            ball.rotation.x = 0;
+        }
 
 
-    ball.currPos.x = ball.prevPos.x + ball.currVel.x;
-    ball.currPos.y = ball.prevPos.y + ball.currVel.y;
-    ball.currPos.z = ball.prevPos.z + ball.currVel.z;
+        ball.currPos.x = ball.prevPos.x + ball.currVel.x;
+        ball.currPos.y = ball.prevPos.y + ball.currVel.y;
+        ball.currPos.z = ball.prevPos.z + ball.currVel.z;
 
-    ball.prevVel = ball.currVel;
-    ball.prevPos = ball.currPos;
-    ball.prevTime = ball.currTime;
+        ball.prevVel = ball.currVel;
+        ball.prevPos = ball.currPos;
+        ball.prevTime = ball.currTime;
         // Calling post redisplay calls the display again and so we don't need to draw the ball in here else it will be drawn twice
         glutPostRedisplay();
 
-    //Reset course if ball's height goes too low
-    if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
-        resetCourse();
+        //Reset course if ball's height goes too low
+        if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
+            resetCourse();
 
     }
 }
@@ -445,40 +451,45 @@ void keyboard(unsigned char key, int x, int y)
             ball.jumpStartH = ball.currPos.y;
         }
     }
-    if (key=='p' && stop==false){
+    if (key=='p' && stop==false)
+    {
         stop=true;
         dispImages();
         glutTimerFunc(5000,exitProg,0);
     }
 }
 
-void exitProg(int x){
+void exitProg(int x)
+{
     printf("exiting...");
     exit(1);
-    }
+}
 
-void dispImages(){
+void dispImages()
+{
     int offset = 0;
 
-	for ( row = I_HEIGHT-1;  row >= 0;  row-- )	{
-      for ( column = 0;  column < I_WIDTH; column++)  {
-      	imageBufferC[I_WIDTH*offset + column] =  imageC[row][column];
-      	imageBufferK[I_WIDTH*offset + column] =  imageK[row][column];
-      	imageBufferR[I_WIDTH*offset + column] =  imageR[row][column];
-      }
-      offset++;
-	}
+    for ( row = I_HEIGHT-1;  row >= 0;  row-- )
+    {
+        for ( column = 0;  column < I_WIDTH; column++)
+        {
+            imageBufferC[I_WIDTH*offset + column] =  imageC[row][column];
+            imageBufferK[I_WIDTH*offset + column] =  imageK[row][column];
+            imageBufferR[I_WIDTH*offset + column] =  imageR[row][column];
+        }
+        offset++;
+    }
 
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBitmap(0, 0, 0, 0, 60, 342, NULL);//easier way to set raster pos using last 2 ints
-	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferC);
+    glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferC);
     glBitmap(0, 0, 0, 0, 300, 0, NULL);
-	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferK);
+    glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferK);
     glBitmap(0, 0, 0, 0, 300, 0, NULL);
-	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferR);
+    glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferR);
 
-	int	i;
+    int	i;
     char	caption1[ ] = "Christo Stephenson";
     char	caption2[ ] = "Kye Horbury";
     char	caption3[ ] = "Rory Lowe-McLoughlin";
@@ -497,7 +508,7 @@ void dispImages(){
     for (i=0; i< sizeof(caption3); i++)
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, caption3[i]);
 
-	glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 void noKeyboard(unsigned char key, int x, int y)
