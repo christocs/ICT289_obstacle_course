@@ -77,6 +77,22 @@ float windResistance;
 //Seconds since last tick
 float deltaT_seconds;
 
+FILE *cFile, *kFile, *rFile;
+typedef 	unsigned char	pixel;
+pixel	imageBuffer[HEIGHT*WIDTH];
+pixel	imageBufferC[HEIGHT*WIDTH];
+pixel	imageBufferK[HEIGHT*WIDTH];
+pixel	imageBufferR[HEIGHT*WIDTH];
+pixel 	imageR[HEIGHT][WIDTH];
+pixel 	imageC[HEIGHT][WIDTH];
+pixel 	imageK[HEIGHT][WIDTH];
+int charin, row, column;
+int cCharIn,rCharIn,kCharIn;
+bool stop=false;
+
+void loadImage();
+void dispImages();
+void exitProg(int x);
 void init();
 void resetCourse();
 void display();
