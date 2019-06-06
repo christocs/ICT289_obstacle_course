@@ -19,7 +19,7 @@
 //The minimum y-coordinate the ball's centre can be at before the course resets
 #define MINIMUM_Y_VALUE_RESET_ZONE -2500
 //Name of the program to be displayed
-#define PROGRAM_NAME "Obstacle Course"
+#define PROGRAM_NAME "Donic the Ledgehog"
 //Wind resistance coefficient to ball's velocity every millisecond
 #define WIND_COEFFICIENT 0.35
 //Acceleration of gravity
@@ -70,8 +70,8 @@
 #define FOV 60
 #define NEAR_VAL 0.1
 #define FAR_VAL 999999
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
 
 //Contains information about the ball
 ball ball;
