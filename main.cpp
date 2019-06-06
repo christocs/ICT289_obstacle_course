@@ -37,8 +37,8 @@ void loadImage(void){
         exit(1);
     }
 
-    for (row = 0; row < HEIGHT; row++){
-        for(column=0; column<WIDTH;column++){
+    for (row = 0; row < I_HEIGHT; row++){
+        for(column=0; column<I_WIDTH;column++){
 
             if( (cCharIn=fgetc(cFile))==EOF ||
                 (kCharIn=fgetc(kFile))==EOF ||
@@ -363,13 +363,13 @@ void animate(int value)
         // Calling post redisplay calls the display again and so we don't need to draw the ball in here else it will be drawn twice
         glutPostRedisplay();
     }
-}
 
     //std::cout << ball.currVel.x << " " << ball.currVel.y << " " << ball.currVel.z << std::endl;
     //std::cout << ball.currPos.x << " " << ball.currPos.y << " " << ball.currPos.z << std::endl;
     //Reset course if ball's height goes too low
     if (ball.currPos.y < MINIMUM_Y_VALUE_RESET_ZONE)
         resetCourse();
+}
 
 
 void keyboard(unsigned char key, int x, int y)
@@ -462,11 +462,11 @@ void exitProg(int x){
 void dispImages(){
     int offset = 0;
 
-	for ( row = HEIGHT-1;  row >= 0;  row-- )	{
-      for ( column = 0;  column < WIDTH; column++)  {
-      	imageBufferC[WIDTH*offset + column] =  imageC[row][column];
-      	imageBufferK[WIDTH*offset + column] =  imageK[row][column];
-      	imageBufferR[WIDTH*offset + column] =  imageR[row][column];
+	for ( row = I_HEIGHT-1;  row >= 0;  row-- )	{
+      for ( column = 0;  column < I_WIDTH; column++)  {
+      	imageBufferC[I_WIDTH*offset + column] =  imageC[row][column];
+      	imageBufferK[I_WIDTH*offset + column] =  imageK[row][column];
+      	imageBufferR[I_WIDTH*offset + column] =  imageR[row][column];
       }
       offset++;
 	}
@@ -474,11 +474,11 @@ void dispImages(){
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBitmap(0, 0, 0, 0, 60, 342, NULL);//easier way to set raster pos using last 2 ints
-	glDrawPixels(WIDTH, HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferC);
+	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferC);
     glBitmap(0, 0, 0, 0, 300, 0, NULL);
-	glDrawPixels(WIDTH, HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferK);
+	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferK);
     glBitmap(0, 0, 0, 0, 300, 0, NULL);
-	glDrawPixels(WIDTH, HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferR);
+	glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferR);
 
 	int	i;
     char	caption1[ ] = "Christo Stephenson";

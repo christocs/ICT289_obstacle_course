@@ -5,6 +5,7 @@
 #include "ball.h"
 #include "point3D.h"
 #include <vector>
+#include <fstream>
 
 #include "Object.h"
 #include "BasicPlatform.h"
@@ -77,15 +78,17 @@ float windResistance;
 //Seconds since last tick
 float deltaT_seconds;
 
+#define   I_HEIGHT	320
+#define   I_WIDTH 	240
 FILE *cFile, *kFile, *rFile;
 typedef 	unsigned char	pixel;
-pixel	imageBuffer[HEIGHT*WIDTH];
-pixel	imageBufferC[HEIGHT*WIDTH];
-pixel	imageBufferK[HEIGHT*WIDTH];
-pixel	imageBufferR[HEIGHT*WIDTH];
-pixel 	imageR[HEIGHT][WIDTH];
-pixel 	imageC[HEIGHT][WIDTH];
-pixel 	imageK[HEIGHT][WIDTH];
+pixel	imageBuffer[I_HEIGHT*I_WIDTH];
+pixel	imageBufferC[I_HEIGHT*I_WIDTH];
+pixel	imageBufferK[I_HEIGHT*I_WIDTH];
+pixel	imageBufferR[I_HEIGHT*I_WIDTH];
+pixel 	imageR[I_HEIGHT][I_WIDTH];
+pixel 	imageC[I_HEIGHT][I_WIDTH];
+pixel 	imageK[I_HEIGHT][I_WIDTH];
 int charin, row, column;
 int cCharIn,rCharIn,kCharIn;
 bool stop=false;
