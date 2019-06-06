@@ -31,9 +31,9 @@ int main(int arc, char** argv)
 void loadImage(void)
 {
 
-    if ( (cFile=fopen("christo.raw","rb"))==NULL ||
-            (kFile=fopen("kye.raw","rb"))==NULL ||
-            (rFile=fopen("rory.raw","rb"))==NULL  )
+    if ( (cFile=fopen(IMAGE1,"rb"))==NULL ||
+            (kFile=fopen(IMAGE2,"rb"))==NULL ||
+            (rFile=fopen(IMAGE3,"rb"))==NULL  )
     {
         printf("\nError opening image, exiting...");
         exit(1);
