@@ -118,7 +118,6 @@ void resetCourse()
     ball.currTime = glutGet(GLUT_ELAPSED_TIME);
     ball.prevTime = ball.currTime;
 
-    std::cout << "Course reset!" << std::endl;
     //Define default wind resistance
     windResistance = 0.35;
 
@@ -331,8 +330,6 @@ void animate(int value)
         if (ball.currVel.y < Y_JITTER && ball.currVel.y > -Y_JITTER)
             ball.currVel.y = 0;
 
-        //std::cout << (ball.currVel.y < JITTER_VEL && ball.currVel.y > -JITTER_VEL) << std::endl;
-
         float millisecondsPassed = deltaT_seconds / (float) TIMERMSECS;
 
         //If ball moving in x direction, rotate
@@ -442,12 +439,9 @@ void keyboard(unsigned char key, int x, int y)
             ball.moveDir.posY = objects[i]->touchingFloor(ball.currPos, ball.radius);
         }
 
-        std::cout << "jump" << ball.moveDir.posY << std::endl;
-
         //Set start height if starting to jump
         if (ball.moveDir.posY)
         {
-            std::cout << "floor detected on jump" << std::endl;
             ball.jumpStartH = ball.currPos.y;
         }
     }
