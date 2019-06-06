@@ -483,7 +483,7 @@ void dispImages()
     glBitmap(0, 0, 0, 0, 300, 0, NULL);
     glDrawPixels(I_WIDTH, I_HEIGHT, GL_LUMINANCE, GL_UNSIGNED_BYTE, imageBufferR);
 
-    int	i;
+    unsigned	i;
     char	caption1[ ] = "Christo Stephenson";
     char	caption2[ ] = "Kye Horbury";
     char	caption3[ ] = "Rory Lowe-McLoughlin";
