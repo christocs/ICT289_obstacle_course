@@ -77,7 +77,6 @@ void TempPlatform::reset()
 
 void TempPlatform::animate(const point3D& currPos, float radius, float t)
 {
-    std::cout << "ttl " << timeToLive << " " << yPlane.touchingFloor(currPos, radius) << " " << currPos.x << " " << currPos.z << std::endl;
     if (timeToLive > 0)
     {
         if ((floorTouched == false))
