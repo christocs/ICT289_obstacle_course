@@ -34,9 +34,6 @@ struct ball
     //Radius of ball in metres
     float radius;
 
-    //mass of ball in kg
-    float mass;
-
     //Time of the last tick
     float prevTime;
 
@@ -49,15 +46,17 @@ struct ball
     //Acceleration caused by specifically making the ball to jump, usually from pressing spacebar
     float jumpAcc;
 
+    //Maximum speed that can be achieved from control inputs
     float maxMoveSpeed;
 
-    //Pointer to the module the ball is currently in
-    Module *currentModule;
-
-    //Pointer to the module the ball was in last tick
-    Module *prevModule;
-
+    //Directions of movement
     direction moveDir;
+
+    //Maximum height the ball can jump
+    int jumpH;
+
+    //Height of the ball before commencing jump
+    float jumpStartH;
 };
 
 #endif // BALL_H

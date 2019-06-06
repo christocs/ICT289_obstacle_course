@@ -34,13 +34,21 @@
 		</Compiler>
 		<Unit filename="AxisAlignedPlane.cpp" />
 		<Unit filename="AxisAlignedPlane.h" />
-		<Unit filename="Module.cpp" />
-		<Unit filename="Module.h" />
-		<Unit filename="PlainModule.h" />
+		<Unit filename="BasicPlatform.cpp" />
+		<Unit filename="BasicPlatform.h" />
+		<Unit filename="Coin.cpp" />
+		<Unit filename="Coin.h" />
+		<Unit filename="Object.h" />
+		<Unit filename="TempPlatform.cpp" />
+		<Unit filename="TempPlatform.h" />
 		<Unit filename="XAlignedPlane.cpp" />
 		<Unit filename="XAlignedPlane.h" />
+		<Unit filename="XMovingPlatform.cpp" />
+		<Unit filename="XMovingPlatform.h" />
 		<Unit filename="YAlignedPlane.cpp" />
 		<Unit filename="YAlignedPlane.h" />
+		<Unit filename="YMovingPlatform.cpp" />
+		<Unit filename="YMovingPlatform.h" />
 		<Unit filename="ZAlignedPlane.cpp" />
 		<Unit filename="ZAlignedPlane.h" />
 		<Unit filename="ball.h" />
@@ -49,9 +57,7 @@
 		<Unit filename="direction.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mainHeader.h" />
-		<Unit filename="plainModule.cpp" />
 		<Unit filename="point3D.h" />
-		<Unit filename="rectangleCorners.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
