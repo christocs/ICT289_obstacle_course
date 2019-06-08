@@ -2,7 +2,6 @@
 #include <GL/freeglut.h>
 
 #include <algorithm>
-#include <iostream>
 
 #define X_Z_COLLISION_MARGIN 1.5
 

@@ -1,5 +1,4 @@
 #include "TempPlatform.h"
-#include <iostream>
 #include <GL/freeglut.h>
 
 TempPlatform::TempPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce, float ttl)

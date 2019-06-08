@@ -1,5 +1,4 @@
 #include "XMovingPlatform.h"
-#include <iostream>
 #include <GL/freeglut.h>
 
 XMovingPlatform::XMovingPlatform(float xMin, float xMax, float y, float zMin, float zMax, float depth, float topBounce, float wallBounce, float dist, float s, bool leftStart)
