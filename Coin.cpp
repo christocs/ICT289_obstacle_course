@@ -1,6 +1,7 @@
 #include "Coin.h"
 
 #include <GL/freeglut.h>
+#include <algorithm>
 
 Coin::Coin(float x, float y, float z, float radius)
 {
@@ -15,9 +16,9 @@ void Coin::animate(const point3D& ballPos, float radius, float t)
 {
     //Check for collision of coin if not collected, mark if collected if collision occurs
     if (collected == false &&
-        ballPos.x < (pos.x + radius) && ballPos.x > (pos.x - radius) &&
-        ballPos.y < (pos.y + radius) && ballPos.y > (pos.y - radius) &&
-        ballPos.z < (pos.z + radius) && ballPos.z > (pos.z - radius)
+        std::abs(ballPos.x - pos.x) <= (rad + radius) &&
+        std::abs(ballPos.y - pos.y) <= (rad + radius) &&
+        std::abs(ballPos.z - pos.z) <= (rad + radius)
         )
         {
             collected = true;
