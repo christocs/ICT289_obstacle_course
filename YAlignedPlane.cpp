@@ -26,8 +26,7 @@ point3D YAlignedPlane::getBallVel(const point3D& vel, const point3D& prevPos, fl
     //Inverts velocity and applies bounce coefficient, if collision detected
     if (collisionDetected(vel, prevPos, radius))
     {
-        //newVel.y = -(bounceCoefficient * vel.y);
-        newVel.y = std::abs(bounceCoefficient * vel.y);
+        newVel.y = -(bounceCoefficient * vel.y);
     }
 
     return newVel;
