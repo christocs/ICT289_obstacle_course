@@ -158,6 +158,11 @@ void resetCourse()
     ball.moveDir.posZ = false;
     ball.moveDir.negZ = false;
 
+    //Initialises ball rotation angle
+    ball.rotation.x = 0;
+    ball.rotation.y = 1;
+    ball.rotation.z = 0;
+
     wind = false;
 
     glutIgnoreKeyRepeat(1);
