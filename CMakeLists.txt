@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 3.16)
+set(PROJECT_NAME ICT289)
+project(${PROJECT_NAME} LANGUAGES CXX)
+
+add_executable(ICT289)
+
+set_target_properties(ICT289 PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF
+)
+
+# Set build output directories.
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG    ${PROJECT_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG    ${PROJECT_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE  ${PROJECT_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE  ${PROJECT_BINARY_DIR})
+
+add_subdirectory(src)
+add_subdirectory(lib)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        freeglut
+        ${OPENGL_gl_LIBRARY}
+        ${OPENGL_glu_LIBRARY}
+)
+#libglu1-mesa-dev
+
+# Copy resources to the binary location.
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res
+)

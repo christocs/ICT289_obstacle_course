@@ -97,9 +97,9 @@ int charin, row, column;
 int cCharIn,rCharIn,kCharIn;
 bool stop=false;
 
-#define IMAGE1 "images\\christo.raw"
-#define IMAGE2 "images\\kye.raw"
-#define IMAGE3 "images\\rory.raw"
+#define IMAGE1 "res/christo.raw"
+#define IMAGE2 "res/kye.raw"
+#define IMAGE3 "res/rory.raw"
 
 void loadImage();
 void dispImages();
